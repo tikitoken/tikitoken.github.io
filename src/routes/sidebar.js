@@ -7,24 +7,24 @@
  */
 const routes = [
   {
-    path: '/app/dashboard', // the url
+    path: '/dashboard', // the url
     icon: 'HomeIcon', // the component being exported from icons/index.js
     name: 'Dashboard', // name that appear in Sidebar
   },
   {
-    path: '/app/transactions',
+    path: '/transactions',
     icon: 'TablesIcon',
     name: 'Tracking',
   },
   {
-    path: '/app/cards',
+    path: '/cards',
     icon: 'CardsIcon',
     name: 'Cards',
   },
   {
-    path: '/app/recovery',
-    icon: 'TwitterIcon',
-    name: 'Recovery',
+    path: '/recovery',
+    icon: 'MoneyIcon',
+    name: 'Presale & Recovery',
   },
 ]
 

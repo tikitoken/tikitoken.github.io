@@ -1,6 +1,7 @@
 import { ReactComponent as ButtonsIcon } from './buttons.svg'
 import { ReactComponent as CardsIcon } from './cards.svg'
 import { ReactComponent as ChartsIcon } from './charts.svg'
+import { ReactComponent as CoinsIcon } from './coins.svg'
 import { ReactComponent as FormsIcon } from './forms.svg'
 import { ReactComponent as HomeIcon } from './home.svg'
 import { ReactComponent as ModalsIcon } from './modals.svg'
@@ -56,4 +57,5 @@ export {
   OutlinePersonIcon,
   OutlineCogIcon,
   OutlineLogoutIcon,
+  CoinsIcon
 }

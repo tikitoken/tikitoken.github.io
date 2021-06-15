@@ -10,9 +10,11 @@ import { SidebarContext } from '../context/SidebarContext'
 
 const Page404 = lazy(() => import('../pages/404'))
 
-function Layout({ address, setAddress, unclaimedDividends, dividends, lastClaimTime, claimAvailable }) {
+function Layout(props) {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
   let location = useLocation()
+
+  const { holdings, paid, pending, recent, address, timeSincePayout, setTimeSincePayout, setHoldings, setPaid, setPending, setRecent, setAddress } = props
 
   useEffect(() => {
     closeSidebar()
@@ -34,8 +36,8 @@ function Layout({ address, setAddress, unclaimedDividends, dividends, lastClaimT
                   <Route
                     key={i}
                     exact={true}
-                    path={`/app${route.path}`}
-                    render={(props) => <route.component {...props} address={address} dividends={dividends} unclaimedDividends={unclaimedDividends} lastClaimTime={lastClaimTime} claimAvailable={claimAvailable} />}
+                    path={`${route.path}`}
+                    render={(props) => <route.component {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} recent={recent} setRecent={setRecent} timeSincePayout={timeSincePayout} setTimeSincePayout={setTimeSincePayout} />}
                   />
                 ) : null
               })}

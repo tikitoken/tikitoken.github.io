@@ -39,8 +39,8 @@ const routes = [
     component: Charts,
   },
   {
-    path: '/buttons',
-    component: Buttons,
+    path: '/presale',
+    component: Forms,
   },
   {
     path: '/modals',

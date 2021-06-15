@@ -18,14 +18,6 @@ import {
   Pagination,
   Card, CardBody
 } from '@windmill/react-ui'
-import {
-  doughnutOptions,
-  lineOptions,
-  barOptions,
-  doughnutLegends,
-  lineLegends,
-  barLegends,
-} from '../utils/demo/chartsData'
 
 import SectionTitle from '../components/Typography/SectionTitle'
 
@@ -1945,6 +1937,15 @@ function Charts({ address }) {
     <>
       <PageTitle>Loss Recovery Program - MAKE SURE YOU HAVE SOLD ALL YOUR MOAI PRIOR TO USING THIS</PageTitle>
 
+      <Card colored className={`text-white mb-8 ${!userEligible || user.totalLoss === undefined ? 'bg-purple-600' : user.totalLoss < 0 ? 'bg-red-600' : 'bg-green-500'}`}>
+          <CardBody>
+            <p className="mb-1 font-semibold text-2xl text-center">{!userEligible || user.totalLoss === undefined ? 'Enter Your Address To Determine If You\'re Eligible For The Presale Whitelist' : user.totalLoss < 0 ? 'You are not currently eligible for the presale whitelist, but you can participate in the open presale. Keep an eye on the Telegram main chat for details.' : 'You are eligible for the presale whitelist, please keep an eye out on the Telegram main chat for details'}</p>
+            <p className="text-xl">
+            
+            </p>
+          </CardBody>
+        </Card>
+
       <div className="grid gap-6 mb-8 md:grid-cols-2">
         <Card colored className="text-white bg-purple-600">
           <CardBody>
@@ -1968,13 +1969,13 @@ function Charts({ address }) {
 
       <Card colored className="text-white bg-purple-600 text-center">
           <CardBody>
-            <p className="mb-4 font-semibold text-2xl">Total Loss To Be Returned Via V2 Recovery Protocol</p>
+            <p className="mb-4 font-semibold text-2xl">Total Loss To Be Returned Via TIKI Recovery Protocol</p>
             <p className="text-xl mb-4">
             {numberCrunch}
             {!userEligible || user.totalLoss === undefined ? '0' : user.totalLoss} <span className="font-bold">BNB</span>
             </p>
-            <p className="text-xl mb-4 font-semibold">{!userEligible || user.totalLoss === undefined ? '' : user.totalLoss < 0 ? 'You are in PROFIT according to the transactions below. You will not be part of the recovery program.' : 'In addition, you will also be airdropped V2 tokens proportional to your share of the total losses as a gesture of goodwill'}</p>
-            <h4>Please note that the full recovery of your total loss is entirely dependent on the growth and success of V2. We cannot guarantee success in this regard, but the protocol is designed to reimburse your loss through activity on V2 over time.</h4>
+            <p className="text-xl mb-4 font-semibold">{!userEligible || user.totalLoss === undefined ? '' : user.totalLoss < 0 ? 'You are in PROFIT according to the transactions below. You will not be part of the recovery program.' : 'In addition, you will also be airdropped TIKI tokens proportional to your share of the total losses as a gesture of goodwill'}</p>
+            <h4>Please note that the full recovery of your total loss is entirely dependent on the growth and success of TIKI. We cannot guarantee success in this regard, but the protocol is designed to reimburse your loss through activity on TIKI over time.</h4>
           </CardBody>
         </Card>
 

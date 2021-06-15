@@ -10,7 +10,7 @@ import { MailIcon } from '../icons'
 function Forms() {
   return (
     <>
-      <PageTitle>Forms</PageTitle>
+      <PageTitle>Presale Eligibility</PageTitle>
       <CTA />
       <SectionTitle>Elements</SectionTitle>
 

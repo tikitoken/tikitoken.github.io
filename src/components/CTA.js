@@ -12,9 +12,9 @@ function CTA({ address }) {
         </svg>
         <span>{(address !== undefined && address !== '' && address.substring(0, 2) === '0x') ? address : 'Please input your address above'}</span>
       </div>
-      <a href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=" target="_blank" rel="noopener noreferrer">
-        Buy MOAI <span dangerouslySetInnerHTML={{ __html: '&RightArrow;' }}></span>
-      </a>
+      {/* <a href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=" target="_blank" rel="noopener noreferrer">
+        Buy TIKI <span dangerouslySetInnerHTML={{ __html: '&RightArrow;' }}></span>
+      </a> */}
     </span>
   )
 }
