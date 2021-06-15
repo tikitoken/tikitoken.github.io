@@ -1,5 +1,5 @@
 import React, { useState, lazy, useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer'
 
 const ethers = require('ethers')
