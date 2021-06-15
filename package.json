@@ -1,15 +1,16 @@
 {
-  "name": "windmill-dashboard-react",
-  "version": "0.4.0",
-  "description": "A multi theme, completely accessible, with components and pages examples, (almost) ready for production dashboard.",
+  "name": "tikitoken",
+  "homepage": "http://tikitoken.github.io/dashboard",
+  "version": "1.0.0",
+  "description": "Hold TIKI, Earn Free BNB.",
   "private": true,
   "scripts": {
     "tailwind:dev": "tailwindcss build src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
     "tailwind:build": "cross-env NODE_ENV=production postcss src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
     "prestart": "npm run tailwind:dev",
     "start": "react-scripts start",
-    "prebuild": "npm run tailwind:build",
-    "build": "react-scripts build",
+    "predeploy": "npm run tailwind:build && npm run build",
+    "deploy": "gh-pages -d build",
     "cz": "git-cz",
     "release": "release-it",
     "test": "react-scripts test",
@@ -46,11 +47,10 @@
     "tailwindcss": "1.4.6"
   },
   "keywords": [
-    "windmill",
-    "dashboard",
-    "admin",
-    "tailwind",
-    "react"
+    "tiki",
+    "token",
+    "tikitoken",
+    "bnb"
   ],
   "release-it": {
     "github": {
