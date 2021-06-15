@@ -1,0 +1,22 @@
+import React, { useEffect } from 'react'
+
+function CTA({ address }) {
+
+  return (
+    <span
+      className="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+    >
+      <div className="flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <span>{(address !== undefined && address !== '' && address.substring(0, 2) === '0x') ? address : 'Please input your address above'}</span>
+      </div>
+      <a href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=" target="_blank" rel="noopener noreferrer">
+        Buy MOAI <span dangerouslySetInnerHTML={{ __html: '&RightArrow;' }}></span>
+      </a>
+    </span>
+  )
+}
+
+export default CTA
