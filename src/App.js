@@ -1,5 +1,5 @@
 import React, { useState, lazy, useEffect } from 'react'
-import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { ethers } from 'ethers'
 
 import TimeDifference from './utils/timeDifference'
