@@ -31,7 +31,7 @@ const routes = [
     component: Forms,
   },
   {
-    path: '/cards',
+    path: '/information',
     component: Cards,
   },
   {

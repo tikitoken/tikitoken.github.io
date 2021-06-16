@@ -1,5 +1,5 @@
 import React, { useContext, Suspense, useEffect, lazy } from 'react'
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom'
+import { Switch, Route, Redirect, useLocation, useHistory } from 'react-router-dom'
 import routes from '../routes'
 
 import Sidebar from '../components/Sidebar'
@@ -13,11 +13,15 @@ const Page404 = lazy(() => import('../pages/404'))
 function Layout(props) {
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext)
   let location = useLocation()
+  let history = useHistory();
 
   const { holdings, paid, pending, recent, address, timeSincePayout, setTimeSincePayout, setHoldings, setPaid, setPending, setRecent, setAddress } = props
 
   useEffect(() => {
     closeSidebar()
+    if (location.pathname === '/') {
+      history.push("/dashboard");
+    }
   }, [location])
 
   return (

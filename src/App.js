@@ -64,7 +64,6 @@ function App() {
         <Switch>
           <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} recent={recent} setRecent={setRecent} timeSincePayout={timeSincePayout} setTimeSincePayout={setTimeSincePayout} />)} />
         </Switch>
-        <Redirect exact from="/" to={{pathname: "/dashboard", state: {address, holdings, paid, pending, recent, timeSincePayout }}} />
       </Router>
     </>
   )

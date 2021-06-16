@@ -17,7 +17,7 @@ const routes = [
     name: 'Tracking',
   },
   {
-    path: '/cards',
+    path: '/information',
     icon: 'CardsIcon',
     name: 'Cards',
   },
