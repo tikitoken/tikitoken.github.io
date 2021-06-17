@@ -36,7 +36,7 @@ const routes = [
   },
   {
     path: '/recovery',
-    component: Charts,
+    component: Dashboard,
   },
   {
     path: '/presale',

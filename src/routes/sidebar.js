@@ -21,11 +21,11 @@ const routes = [
     icon: 'CardsIcon',
     name: 'Cards',
   },
-  {
-    path: '/recovery',
-    icon: 'MoneyIcon',
-    name: 'Presale & Recovery',
-  },
+  // {
+  //   path: '/recovery',
+  //   icon: 'MoneyIcon',
+  //   name: 'Presale & Recovery',
+  // },
 ]
 
 export default routes
