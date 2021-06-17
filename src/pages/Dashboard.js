@@ -117,7 +117,7 @@ function Dashboard(props) {
           />
         </InfoCard>
 
-        <InfoCard title="Paid To You" value={`${paid.toString() / 1e18} BNB`}>
+        <InfoCard title="Paid To You" value={`${(paid / 1e18).toFixed(4)} BNB`}>
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-green-500 dark:text-green-100"
@@ -126,7 +126,7 @@ function Dashboard(props) {
           />
         </InfoCard>
 
-        <InfoCard title="Pending Payout" value={`${pending.toString() / 1e18} BNB`}>
+        <InfoCard title="Pending Payout" value={`${(pending / 1e18).toFixed(4)} BNB`}>
           <RoundIcon
             icon={MoneyIcon}
             iconColorClass="text-blue-500 dark:text-blue-100"
