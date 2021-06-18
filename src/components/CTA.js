@@ -2864,13 +2864,15 @@ function CTA({ address, holdings }) {
   const airdrop = airdrops.filter(airdrop => airdrop.address === address.toLowerCase())
   const airdropDue = airdrop.length !== 0 ? airdrop[0].tokens : 0
 
+  const addrFilledColorConditional = (address !== undefined && address !== '' && address.substring(0, 2) === '0x') ? 'bg-green-600' : 'bg-purple-600'
+
   return (
     <>
 
     {airdropDue !== 0 ?
     
     <span
-      className="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-green-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+      className={`flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-green-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple`}
     >
       <div className="flex items-center">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -2883,7 +2885,7 @@ function CTA({ address, holdings }) {
     : null}
 
     <span
-      className="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+      className={`flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 ${addrFilledColorConditional} rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple`}
     >
       <div className="flex items-center">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">

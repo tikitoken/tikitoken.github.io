@@ -11,7 +11,8 @@ import RoundIcon from '../components/RoundIcon'
 import response from '../utils/demo/tableData'
 import {
   Card,
-  CardBody
+  CardBody,
+  Button
 } from '@windmill/react-ui'
 
 
@@ -102,7 +103,7 @@ function Dashboard(props) {
 
       <CTA address={address} holdings={holdings} />
 
-      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         <InfoCard title="Your TIKI Holdings" value={`${numberWithCommas(holdings)} TIKI`}>
           <RoundIcon
             icon={CoinsIcon}
@@ -121,14 +122,15 @@ function Dashboard(props) {
           />
         </InfoCard>
 
-        <InfoCard title="Pending Payout" value={`${(pending / 1e18).toFixed(4)} BNB`}>
-          <RoundIcon
-            icon={MoneyIcon}
-            iconColorClass="text-blue-500 dark:text-blue-100"
-            bgColorClass="bg-blue-100 dark:bg-blue-500"
-            className="mr-4"
-          />
+        <InfoCard className="" title="Pending Payout" value={`${(pending / 1e18).toFixed(4)} BNB`}>
+            <RoundIcon
+              icon={MoneyIcon}
+              iconColorClass="text-blue-500 dark:text-blue-100"
+              bgColorClass="bg-blue-100 dark:bg-blue-500"
+              className="mr-4"
+            />
         </InfoCard>
+        
 
         <InfoCard title="Most Recent Payout" value={`${timeSincePayout}`}>
           <RoundIcon
@@ -139,6 +141,13 @@ function Dashboard(props) {
           />
         </InfoCard>
       </div>
+
+      
+      <Button className="w-full mt-4 mb-4" style={{background: 'lime !important'}} iconLeft={HeartIcon}>
+        <a href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x9b76D1B12Ff738c113200EB043350022EBf12Ff0" target="_blank" rel="noopener noreferrer">
+          Click Here To Reinvest Your Dividends And Earn Even More BNB Over Time
+        </a>
+      </Button>
 
       <Card>
         <CardBody className="flex flex-col text-center items-center">
