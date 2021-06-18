@@ -10,17 +10,8 @@ import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon, HeartIcon, CoinsIcon } from 
 import RoundIcon from '../components/RoundIcon'
 import response from '../utils/demo/tableData'
 import {
-  TableBody,
-  TableContainer,
-  Table,
-  TableHeader,
-  TableCell,
-  TableRow,
-  TableFooter,
-  Avatar,
-  Badge,
-  Pagination,
-  Button
+  Card,
+  CardBody
 } from '@windmill/react-ui'
 
 
@@ -99,11 +90,11 @@ function Dashboard(props) {
   const resultsPerPage = 0
   const totalResults = response.length
 
-  const { holdings, paid, pending, recent, address, timeSincePayout, setHoldings, setPaid, setPending, setRecent, setAddress, setTimeSincePayout } = props
+  const { totalPaid, holdings, paid, pending, recent, address, timeSincePayout, setHoldings, setPaid, setPending, setRecent, setAddress, setTimeSincePayout } = props
 
   return (
     <div className="pb-10">
-      <PageTitle>TIKI Earnings Manager</PageTitle>
+      <PageTitle className="text-3xl">TIKI Earnings Manager</PageTitle>
 
       <CTA address={address} />
 
@@ -145,10 +136,14 @@ function Dashboard(props) {
         </InfoCard>
       </div>
 
-      <ChartCard title="Total BNB Paid Out (COMING SOON)">
-          <Line {...lineOptions} />
-          <ChartLegend legends={lineLegends} />
-      </ChartCard>
+      <Card>
+        <CardBody className="flex flex-col text-center items-center">
+          <p className="mb-4 mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid Out To All Holders Of TIKI</p><br/>
+          <img className="w-32 h-32" src={require('../assets/img/bnb.png')} />
+          <p className="text-green-400 dark:text-green-400 text-6xl text-center">{totalPaid}</p>
+          <img className="w-32 h-32 mb-8 flex-row" src={require('../assets/img/bnb.png')} />
+        </CardBody>
+      </Card>
     </div>
   )
 }

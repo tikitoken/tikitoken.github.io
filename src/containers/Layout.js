@@ -15,7 +15,7 @@ function Layout(props) {
   let location = useLocation()
   let history = useHistory();
 
-  const { holdings, paid, pending, recent, address, timeSincePayout, setTimeSincePayout, setHoldings, setPaid, setPending, setRecent, setAddress } = props
+  const { totalPaid, holdings, paid, pending, recent, address, timeSincePayout, setTimeSincePayout, setHoldings, setPaid, setPending, setRecent, setAddress } = props
 
   useEffect(() => {
     closeSidebar()
@@ -41,7 +41,7 @@ function Layout(props) {
                     key={i}
                     exact={true}
                     path={`${route.path}`}
-                    render={(props) => <route.component {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} recent={recent} setRecent={setRecent} timeSincePayout={timeSincePayout} setTimeSincePayout={setTimeSincePayout} />}
+                    render={(props) => <route.component {...props} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} recent={recent} setRecent={setRecent} timeSincePayout={timeSincePayout} setTimeSincePayout={setTimeSincePayout} />}
                   />
                 ) : null
               })}
