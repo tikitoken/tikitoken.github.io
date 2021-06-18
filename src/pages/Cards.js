@@ -18,7 +18,7 @@ function Cards() {
           <CardBody>
             <p className="mb-4 text-3xl font-semibold text-gray-600 dark:text-gray-300">1. Buying</p>
             <p className="text-gray-600 text-2xl dark:text-gray-400">
-              You can buy $TIKI from PancakeSwap <a className="text-purple-500" href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=" target="_blank" rel="noopener noreferrer">HERE</a>, and when you buy tokens for the first time, you become eligible to receive automatic BNB rewards for holding
+              You can buy $TIKI from PancakeSwap <a className="text-purple-500" href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x9b76D1B12Ff738c113200EB043350022EBf12Ff0" target="_blank" rel="noopener noreferrer">HERE</a>, and when you buy tokens for the first time, you become eligible to receive automatic BNB rewards for holding
             </p>
           </CardBody>
         </Card>

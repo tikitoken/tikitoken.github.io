@@ -43,8 +43,11 @@ function App() {
   }, [address, refreshAddressData])
 
   useEffect(() => {
-    setTimeSincePayout(recent !== 0 ? TimeDifference(Date.now(), recent) : 'N/A')
-    setTimeout(function(){ setRefreshTimeData(!refreshTimeData) }, 5000);
+    tikiContract.getTotalDividendsDistributed().then(total => {
+      setTotalPaid((total/1e18).toFixed(2))
+      setTimeSincePayout(recent !== 0 ? TimeDifference(Date.now(), recent) : 'N/A')
+      setTimeout(function(){ setRefreshTimeData(!refreshTimeData) }, 5000);
+    })
   }, [refreshTimeData])
 
   // int256 index,
@@ -58,15 +61,12 @@ function App() {
   const callContract = () => {
     tikiContract.balanceOf(address).then(balance => {
       setHoldings((balance / 1e18).toFixed(0))
-      tikiContract.getTotalDividendsDistributed().then(total => {
-        setTotalPaid((total/1e18).toFixed(2))
         tikiContract.getAccountDividendsInfo(address).then(result => {
           setPaid( (parseInt(result[4]._hex, 16) - parseInt(result[3]._hex, 16)) )
           setPending(parseInt(result[3]._hex, 16))
           setRecent(parseInt(result[5]._hex, 16)*1000)
           setTimeout(function(){ setRefreshAddressData(!refreshAddressData) }, 9000);
         })
-      })
     })
     // tikiContract.getAccountDividendsInfo(address).then((result) =>{
     //   console.log(result)
