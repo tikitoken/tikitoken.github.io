@@ -35,7 +35,7 @@ function Layout(props) {
       <div className="flex flex-col flex-1 w-full">
         <Header address={address} setAddress={setAddress} />
         <Main>
-          {totalPaid !== 0 ? <Suspense fallback={<ThemedSuspense />}>
+          {((totalPaid !== 0 && address === '') || (address !== '' && recent !== 1)) ? <Suspense fallback={<ThemedSuspense />}>
             <Switch>
               {routes.map((route, i) => {
                 return route.component ? (

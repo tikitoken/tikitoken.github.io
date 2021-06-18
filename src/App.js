@@ -26,8 +26,8 @@ function App() {
   const [holdings, setHoldings] = useState(0)
   const [paid, setPaid] = useState(0)
   const [pending, setPending] = useState(0)
-  const [recent, setRecent] = useState(0)
-  const [timeSincePayout, setTimeSincePayout] = useState('N/A')
+  const [recent, setRecent] = useState(1)
+  const [timeSincePayout, setTimeSincePayout] = useState('Loading...')
 
   const [refreshAddressData, setRefreshAddressData] = useState(true)
   const [refreshTimeData, setRefreshTimeData] = useState(true)
@@ -54,7 +54,7 @@ function App() {
   useEffect(() => {
     tikiContract.getTotalDividendsDistributed().then(total => {
       setTotalPaid((total/1e18).toFixed(0))
-      setTimeSincePayout(recent !== 0 ? TimeDifference(Date.now(), recent) : 'N/A')
+      setTimeSincePayout(recent !== 1 ? TimeDifference(Date.now(), recent) : 'Loading...')
       setTimeout(function(){ setRefreshTimeData(!refreshTimeData) }, 5000);
     })
   }, [refreshTimeData])
@@ -68,6 +68,7 @@ function App() {
   // uint256 secondsUntilAutoClaimAvailable
 
   const callContract = () => {
+    console.log(recent)
     tikiContract.balanceOf(address).then(balance => {
       setHoldings((balance / 1e18).toFixed(0))
         tikiContract.getAccountDividendsInfo(address).then(result => {
