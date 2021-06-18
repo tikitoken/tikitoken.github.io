@@ -46,7 +46,7 @@ function Cards() {
           <CardBody>
             <p className="mb-4 text-3xl font-semibold text-gray-600 dark:text-gray-300">4. Payouts</p>
             <p className="text-gray-600 text-2xl dark:text-gray-400">
-              Every 6 hours, you are automatically paid BNB in proportion to the size of your holdings relative to the supply
+              Every 1 hour, you are automatically paid BNB in proportion to the size of your holdings relative to the supply
             </p>
           </CardBody>
         </Card>
