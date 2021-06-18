@@ -139,9 +139,9 @@ function Dashboard(props) {
       <Card>
         <CardBody className="flex flex-col text-center items-center">
           <p className="mb-4 mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid Out To All Holders Of TIKI</p><br/>
-          <img className="w-32 h-32" src={require('../assets/img/bnb.png')} />
+          {/* <img className="w-32 h-32" src={require('../assets/img/bnb.png')} /> */}
           <p className="text-green-400 dark:text-green-400 text-6xl text-center">{totalPaid}</p>
-          <img className="w-32 h-32 mb-8 flex-row" src={require('../assets/img/bnb.png')} />
+          {/* <img className="w-32 h-32 mb-8 flex-row" src={require('../assets/img/bnb.png')} /> */}
         </CardBody>
       </Card>
     </div>
