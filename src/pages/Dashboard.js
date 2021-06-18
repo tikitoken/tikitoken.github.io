@@ -19,6 +19,10 @@ export const lineLegends = [
   { title: 'BNB Paid Out', color: 'bg-green-400' },
 ]
 
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 
 const lineOptions = {
   data: {
@@ -99,7 +103,7 @@ function Dashboard(props) {
       <CTA address={address} holdings={holdings} />
 
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-        <InfoCard title="Your TIKI Holdings" value={`${holdings} TIKI`}>
+        <InfoCard title="Your TIKI Holdings" value={`${numberWithCommas(holdings)} TIKI`}>
           <RoundIcon
             icon={CoinsIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
@@ -140,7 +144,7 @@ function Dashboard(props) {
         <CardBody className="flex flex-col text-center items-center">
           <p className="mb-4 mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid Out To All Holders Of TIKI</p><br/>
           <img className="w-32 h-32" src={require('../assets/img/bnb.png')} />
-          <p className="text-green-400 dark:text-green-400 text-6xl text-center">{totalPaid}</p>
+          <p className="text-green-400 dark:text-green-400 text-6xl text-center">{numberWithCommas(totalPaid)} BNB</p>
           <img className="w-32 h-32 mb-8 flex-row" src={require('../assets/img/bnb.png')} />
         </CardBody>
       </Card>
