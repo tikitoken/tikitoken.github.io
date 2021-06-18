@@ -24,6 +24,8 @@ function Layout(props) {
     }
   }, [location])
 
+  console.log(totalPaid)
+
   return (
     <div
       className={`flex h-screen bg-gray-50 dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}
@@ -33,7 +35,7 @@ function Layout(props) {
       <div className="flex flex-col flex-1 w-full">
         <Header address={address} setAddress={setAddress} />
         <Main>
-          <Suspense fallback={<ThemedSuspense />}>
+          {totalPaid !== 0 ? <Suspense fallback={<ThemedSuspense />}>
             <Switch>
               {routes.map((route, i) => {
                 return route.component ? (
@@ -46,7 +48,10 @@ function Layout(props) {
                 ) : null
               })}
             </Switch>
-          </Suspense>
+          </Suspense> : 
+          <div className="w-full h-full flex justify-center">
+            <img src='https://uploads-ssl.webflow.com/60c7783699e1051d74062f79/60c9ca23cfdaec309091e4b0_Logo---Animation--05.gif' className="w-1/4 h-1/3 mt-48 inline-block align-middle"/>
+          </div>}
         </Main>
       </div>
     </div>
