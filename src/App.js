@@ -68,7 +68,6 @@ function App() {
   // uint256 secondsUntilAutoClaimAvailable
 
   const callContract = () => {
-    console.log(recent)
     tikiContract.balanceOf(address).then(balance => {
       setHoldings((balance / 1e18).toFixed(0))
         tikiContract.getAccountDividendsInfo(address).then(result => {

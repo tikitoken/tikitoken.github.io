@@ -24,8 +24,6 @@ function Layout(props) {
     }
   }, [location])
 
-  console.log(totalPaid)
-
   return (
     <div
       className={`flex h-screen bg-gray-50 dark:bg-gray-900 ${isSidebarOpen && 'overflow-hidden'}`}
