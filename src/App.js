@@ -26,8 +26,7 @@ function App() {
   const [holdings, setHoldings] = useState(0)
   const [paid, setPaid] = useState(0)
   const [pending, setPending] = useState(0)
-  const [recent, setRecent] = useState(1)
-  const [timeSincePayout, setTimeSincePayout] = useState('Loading...')
+  const [timeSincePayout, setTimeSincePayout] = useState('N/A')
 
   const [refreshAddressData, setRefreshAddressData] = useState(true)
   const [refreshTimeData, setRefreshTimeData] = useState(true)
@@ -54,7 +53,6 @@ function App() {
   useEffect(() => {
     tikiContract.getTotalDividendsDistributed().then(total => {
       setTotalPaid((total/1e18).toFixed(0))
-      setTimeSincePayout(recent !== 1 ? TimeDifference(Date.now(), recent) : 'Loading...')
       setTimeout(function(){ setRefreshTimeData(!refreshTimeData) }, 5000);
     })
   }, [refreshTimeData])
@@ -71,9 +69,10 @@ function App() {
     tikiContract.balanceOf(address).then(balance => {
       setHoldings((balance / 1e18).toFixed(0))
         tikiContract.getAccountDividendsInfo(address).then(result => {
+          const recentPayout = parseInt(result[5]._hex, 16)*1000
           setPaid( (parseInt(result[4]._hex, 16) - parseInt(result[3]._hex, 16)) )
           setPending(parseInt(result[3]._hex, 16))
-          setRecent(parseInt(result[5]._hex, 16)*1000)
+          setTimeSincePayout(recentPayout !== 0 ? TimeDifference(Date.now(), recentPayout) : 'N/A')
           setTimeout(function(){ setRefreshAddressData(!refreshAddressData) }, 9000);
         })
     })
@@ -91,7 +90,7 @@ function App() {
       <Router>
         <AccessibleNavigationAnnouncer />
         <Switch>
-          <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} recent={recent} setRecent={setRecent} timeSincePayout={timeSincePayout} setTimeSincePayout={setTimeSincePayout} totalPaid={totalPaid} bnbPrice={bnbPrice} />)} />
+          <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} timeSincePayout={timeSincePayout} setTimeSincePayout={setTimeSincePayout} totalPaid={totalPaid} bnbPrice={bnbPrice} />)} />
         </Switch>
       </Router>
     </>

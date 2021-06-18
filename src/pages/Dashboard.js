@@ -95,7 +95,7 @@ function Dashboard(props) {
   const resultsPerPage = 0
   const totalResults = response.length
 
-  const { bnbPrice, totalPaid, holdings, paid, pending, recent, address, timeSincePayout, setHoldings, setPaid, setPending, setRecent, setAddress, setTimeSincePayout } = props
+  const { bnbPrice, totalPaid, holdings, paid, pending, address, timeSincePayout, setHoldings, setPaid, setPending, setAddress, setTimeSincePayout } = props
 
   return (
     <div className="pb-10">
@@ -142,12 +142,11 @@ function Dashboard(props) {
         </InfoCard>
       </div>
 
-      
-      <Button className="w-full mt-4 mb-4" style={{background: 'lime !important'}} iconLeft={HeartIcon}>
-        <a href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x9b76D1B12Ff738c113200EB043350022EBf12Ff0" target="_blank" rel="noopener noreferrer">
-          Click Here To Reinvest Your Dividends And Earn Even More BNB Over Time
-        </a>
-      </Button>
+      <a  className="w-full h-full" href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x9b76D1B12Ff738c113200EB043350022EBf12Ff0" target="_blank" rel="noopener noreferrer">
+        <Button className="w-full mt-4 mb-4" style={{background: 'lime !important'}} iconLeft={HeartIcon}>
+            Click Here To Reinvest Your Dividends And Earn Even More BNB Over Time
+        </Button>
+      </a>
 
       <Card>
         <CardBody className="flex flex-col text-center items-center">

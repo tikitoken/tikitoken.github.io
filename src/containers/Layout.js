@@ -33,7 +33,7 @@ function Layout(props) {
       <div className="flex flex-col flex-1 w-full">
         <Header address={address} setAddress={setAddress} />
         <Main>
-          {((totalPaid !== 0 && address === '') || (address !== '' && recent !== 1)) ? <Suspense fallback={<ThemedSuspense />}>
+          {((totalPaid !== 0 && address === '') || (address !== '' && timeSincePayout !== 'N/A')) ? <Suspense fallback={<ThemedSuspense />}>
             <Switch>
               {routes.map((route, i) => {
                 return route.component ? (
@@ -41,7 +41,7 @@ function Layout(props) {
                     key={i}
                     exact={true}
                     path={`${route.path}`}
-                    render={(props) => <route.component {...props} bnbPrice={bnbPrice} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} recent={recent} setRecent={setRecent} timeSincePayout={timeSincePayout} setTimeSincePayout={setTimeSincePayout} />}
+                    render={(props) => <route.component {...props} bnbPrice={bnbPrice} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} timeSincePayout={timeSincePayout} setTimeSincePayout={setTimeSincePayout} />}
                   />
                 ) : null
               })}
