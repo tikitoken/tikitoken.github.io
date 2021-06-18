@@ -94,7 +94,7 @@ function Dashboard(props) {
   const resultsPerPage = 0
   const totalResults = response.length
 
-  const { totalPaid, holdings, paid, pending, recent, address, timeSincePayout, setHoldings, setPaid, setPending, setRecent, setAddress, setTimeSincePayout } = props
+  const { bnbPrice, totalPaid, holdings, paid, pending, recent, address, timeSincePayout, setHoldings, setPaid, setPending, setRecent, setAddress, setTimeSincePayout } = props
 
   return (
     <div className="pb-10">
@@ -142,10 +142,9 @@ function Dashboard(props) {
 
       <Card>
         <CardBody className="flex flex-col text-center items-center">
-          <p className="mb-4 mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid Out To All Holders Of TIKI</p><br/>
-          <img className="w-32 h-32" src={require('../assets/img/bnb.png')} />
-          <p className="text-green-400 dark:text-green-400 text-6xl text-center">{numberWithCommas(totalPaid)} BNB</p>
-          <img className="w-32 h-32 mb-8 flex-row" src={require('../assets/img/bnb.png')} />
+          <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/bnb.png')} />
+          <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid Out To $TIKI Holders</p><br/>
+          <p className="text-green-400 dark:text-green-400 text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">BNB</span><br/> = ${numberWithCommas((bnbPrice*totalPaid).toFixed(0))}</p>
         </CardBody>
       </Card>
     </div>

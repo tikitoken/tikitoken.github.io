@@ -21,6 +21,7 @@ const tikiContract = new ethers.Contract(tikiContractAddress, [{"inputs":[],"sta
 
 function App() {
   const [totalPaid, setTotalPaid] = useState(0)
+  const [bnbPrice, setBnbPrice] = useState(0)
 
   const [holdings, setHoldings] = useState(0)
   const [paid, setPaid] = useState(0)
@@ -36,6 +37,14 @@ function App() {
   )
 
   useEffect(() => {
+    fetch('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=USD&include_market_cap=false&include_24hr_vol=false&include_24hr_change=false&include_last_updated_at=false').then(response => {
+      response.json().then(json => {
+        setBnbPrice(json.binancecoin.usd)
+      })
+    })
+  })
+
+  useEffect(() => {
     if (address.substring(0,2) === '0x' || address.substring(0,2) === '0X') {
       if (localStorage.getItem('address') !== address) localStorage.setItem('address', address)
       callContract(address)
@@ -44,7 +53,7 @@ function App() {
 
   useEffect(() => {
     tikiContract.getTotalDividendsDistributed().then(total => {
-      setTotalPaid((total/1e18).toFixed(2))
+      setTotalPaid((total/1e18).toFixed(0))
       setTimeSincePayout(recent !== 0 ? TimeDifference(Date.now(), recent) : 'N/A')
       setTimeout(function(){ setRefreshTimeData(!refreshTimeData) }, 5000);
     })
@@ -82,7 +91,7 @@ function App() {
       <Router>
         <AccessibleNavigationAnnouncer />
         <Switch>
-          <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} recent={recent} setRecent={setRecent} timeSincePayout={timeSincePayout} setTimeSincePayout={setTimeSincePayout} totalPaid={totalPaid} />)} />
+          <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} recent={recent} setRecent={setRecent} timeSincePayout={timeSincePayout} setTimeSincePayout={setTimeSincePayout} totalPaid={totalPaid} bnbPrice={bnbPrice} />)} />
         </Switch>
       </Router>
     </>
