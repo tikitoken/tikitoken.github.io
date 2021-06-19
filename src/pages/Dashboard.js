@@ -95,7 +95,7 @@ function Dashboard(props) {
   const resultsPerPage = 0
   const totalResults = response.length
 
-  const { bnbPrice, totalPaid, holdings, paid, pending, address, timeSincePayout, setHoldings, setPaid, setPending, setAddress, setTimeSincePayout } = props
+  const { bnbPrice, totalPaid, holdings, paid, pending, address, position, setHoldings, setPaid, setPending, setAddress, setPosition } = props
 
   return (
     <div className="pb-10">
@@ -113,7 +113,7 @@ function Dashboard(props) {
           />
         </InfoCard>
 
-        <InfoCard title="Paid To You" value={`${(paid / 1e18).toFixed(4)} BNB`}>
+        <InfoCard title="Already Paid To You" value={`${(paid / 1e18).toFixed(4)} BNB`}>
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-green-500 dark:text-green-100"
@@ -122,7 +122,7 @@ function Dashboard(props) {
           />
         </InfoCard>
 
-        <InfoCard className="" title="Pending Payout" value={`${(pending / 1e18).toFixed(4)} BNB`}>
+        <InfoCard className="" title="To Be Paid To You" value={`${(pending / 1e18).toFixed(4)} BNB`}>
             <RoundIcon
               icon={MoneyIcon}
               iconColorClass="text-blue-500 dark:text-blue-100"
@@ -132,7 +132,7 @@ function Dashboard(props) {
         </InfoCard>
         
 
-        <InfoCard title="Most Recent Payout" value={`${timeSincePayout}`}>
+        <InfoCard title="Payout Queue Position" value={`# ${position}`}>
           <RoundIcon
             icon={CartIcon}
             iconColorClass="text-yellow-500 dark:text-yellow-100"

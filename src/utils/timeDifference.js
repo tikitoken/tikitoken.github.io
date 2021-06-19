@@ -9,26 +9,29 @@ export default function TimeDifference(current, previous) {
   var elapsed = current - previous;
 
   if (elapsed < msPerMinute) {
-       return Math.round(elapsed/1000) + ' seconds ago';   
+      const secs = Math.round(elapsed/1000)
+      return secs > 1 ? secs + ' Seconds Ago' : secs + ' Second Ago';   
   }
 
   else if (elapsed < msPerHour) {
-       return Math.round(elapsed/msPerMinute) + ' minutes ago';   
+      const mins = Math.round(elapsed/msPerMinute)
+      return mins > 1 ? mins + ' Minutes Ago' : mins + ' Minute Ago';   
   }
 
   else if (elapsed < msPerDay ) {
-       return Math.round(elapsed/msPerHour ) + ' hours ago';   
+      const hours = Math.round(elapsed/msPerHour )
+      return hours > 1 ? hours + ' Hours Ago' : hours + ' Hour Ago';  
   }
 
   else if (elapsed < msPerMonth) {
-      return '~ ' + Math.round(elapsed/msPerDay) + ' days ago';   
+      return '~ ' + Math.round(elapsed/msPerDay) + ' days Ago';   
   }
 
   else if (elapsed < msPerYear) {
-      return '~ ' + Math.round(elapsed/msPerMonth) + ' months ago';   
+      return '~ ' + Math.round(elapsed/msPerMonth) + ' months Ago';   
   }
 
   else {
-      return '~ ' + Math.round(elapsed/msPerYear ) + ' years ago';   
+      return '~ ' + Math.round(elapsed/msPerYear ) + ' years Ago';   
   }
 }

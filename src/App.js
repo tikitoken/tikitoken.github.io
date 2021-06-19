@@ -26,7 +26,8 @@ function App() {
   const [holdings, setHoldings] = useState(0)
   const [paid, setPaid] = useState(0)
   const [pending, setPending] = useState(0)
-  const [timeSincePayout, setTimeSincePayout] = useState('N/A')
+  const [position, setPosition] = useState('N/A')
+  // const [timeSincePayout, setTimeSincePayout] = useState('N/A')
 
   const [refreshAddressData, setRefreshAddressData] = useState(true)
   const [refreshTimeData, setRefreshTimeData] = useState(true)
@@ -69,10 +70,9 @@ function App() {
     tikiContract.balanceOf(address).then(balance => {
       setHoldings((balance / 1e18).toFixed(0))
         tikiContract.getAccountDividendsInfo(address).then(result => {
-          const recentPayout = parseInt(result[5]._hex, 16)*1000
           setPaid( (parseInt(result[4]._hex, 16) - parseInt(result[3]._hex, 16)) )
           setPending(parseInt(result[3]._hex, 16))
-          setTimeSincePayout(recentPayout !== 0 ? TimeDifference(Date.now(), recentPayout) : 'N/A')
+          setPosition(parseInt(result[2]._hex, 16))
           setTimeout(function(){ setRefreshAddressData(!refreshAddressData) }, 9000);
         })
     })
@@ -90,7 +90,7 @@ function App() {
       <Router>
         <AccessibleNavigationAnnouncer />
         <Switch>
-          <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} timeSincePayout={timeSincePayout} setTimeSincePayout={setTimeSincePayout} totalPaid={totalPaid} bnbPrice={bnbPrice} />)} />
+          <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} position={position} setPosition={setPosition} totalPaid={totalPaid} bnbPrice={bnbPrice} />)} />
         </Switch>
       </Router>
     </>
