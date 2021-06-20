@@ -25,7 +25,8 @@ function App() {
   const [holdings, setHoldings] = useState(0)
   const [paid, setPaid] = useState(0)
   const [lastPaid, setLastPaid] = useState(0)
-  const [position, setPosition] = useState(0)
+  const [nextPayoutProgress, setNextPayoutProgress] = useState(0)
+  const [nextPayoutValue, setNextPayoutValue] = useState(0)
 
   const [refreshAddressData, setRefreshAddressData] = useState(true)
   const [refreshTimeData, setRefreshTimeData] = useState(true)
@@ -71,7 +72,8 @@ function App() {
           tikiContract.getAccountDividendsInfo(address).then(result => {
             setPaid( parseInt(result[4]._hex, 16) )
             setLastPaid(parseInt(result[5]._hex, 16)*1000)
-            setPosition((100-((parseInt(result[2]._hex, 16)/parseInt(holders._hex, 16))*100)).toFixed(0))
+            setNextPayoutProgress((100-((parseInt(result[2]._hex, 16)/parseInt(holders._hex, 16))*100)).toFixed(0))
+            setNextPayoutValue( (parseInt(result[3]._hex, 16)/1e18).toFixed(4) )
             setTimeout(function(){ setRefreshAddressData(!refreshAddressData) }, 9000);
           })
         })
@@ -90,7 +92,7 @@ function App() {
       <Router>
         <AccessibleNavigationAnnouncer />
         <Switch>
-          <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} position={position} setPosition={setPosition} totalPaid={totalPaid} bnbPrice={bnbPrice} />)} />
+          <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} totalPaid={totalPaid} bnbPrice={bnbPrice} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} />)} />
         </Switch>
       </Router>
     </>

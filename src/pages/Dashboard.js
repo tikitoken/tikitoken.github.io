@@ -96,7 +96,7 @@ function Dashboard(props) {
   const resultsPerPage = 0
   const totalResults = response.length
 
-  const { bnbPrice, totalPaid, holdings, paid, lastPaid, address, position, setHoldings, setPaid, setLastPaid, setAddress, setPosition } = props
+  const { bnbPrice, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
 
   return (
     <div className="pb-10">
@@ -113,17 +113,24 @@ function Dashboard(props) {
             className="mr-4"
           />
         </InfoCard>
+        
+        <Card>
+          <CardBody className="flex items-center">
+            <RoundIcon
+              icon={CartIcon}
+              iconColorClass="text-yellow-500 dark:text-yellow-100"
+              bgColorClass="bg-yellow-100 dark:bg-yellow-500"
+              className="mr-4"
+            />
+            <div>
+              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your BNB Earned</p>
+              
+              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{`${(paid / 1e18).toFixed(4)}`} BNB</span></p>
+            </div>
+          </CardBody>
+        </Card>
 
-        <InfoCard title="Your BNB Earned" value={`${(paid / 1e18).toFixed(4)} BNB`}>
-          <RoundIcon
-            icon={PeopleIcon}
-            iconColorClass="text-green-500 dark:text-green-100"
-            bgColorClass="bg-green-100 dark:bg-green-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-        <InfoCard className="" title="Last Payout" value={`${lastPaid === 0 ? 'Never' : TimeDifference(Date.now(), lastPaid)}`}>
+        <InfoCard className="" title="Last Payout Time" value={`${lastPaid === 0 ? 'Never' : TimeDifference(Date.now(), lastPaid)}`}>
             <RoundIcon
               icon={MoneyIcon}
               iconColorClass="text-blue-500 dark:text-blue-100"
@@ -132,15 +139,21 @@ function Dashboard(props) {
             />
         </InfoCard>
         
-
-        <InfoCard title="Next Payout Loading" value={Date.now()-lastPaid >= 3600000 ? `${position}%` : `${(((Date.now()-lastPaid)/3600000)*100).toFixed(0)}%`}>
-          <RoundIcon
-            icon={CartIcon}
-            iconColorClass="text-yellow-500 dark:text-yellow-100"
-            bgColorClass="bg-yellow-100 dark:bg-yellow-500"
-            className="mr-4"
-          />
-        </InfoCard>
+        <Card>
+          <CardBody className="flex items-center">
+            <RoundIcon
+              icon={CartIcon}
+              iconColorClass="text-yellow-500 dark:text-yellow-100"
+              bgColorClass="bg-yellow-100 dark:bg-yellow-500"
+              className="mr-4"
+            />
+            <div>
+              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Next Payout Loading</p>
+              
+              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{Date.now()-lastPaid >= 3600000 ? `${nextPayoutProgress}% | ` : `${(((Date.now()-lastPaid)/3600000)*100).toFixed(0)}% | `}<span className="text-yellow-300">{nextPayoutValue} BNB</span></p>
+            </div>
+          </CardBody>
+        </Card>
       </div>
 
       <a  className="w-full h-full" href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x9b76D1B12Ff738c113200EB043350022EBf12Ff0" target="_blank" rel="noopener noreferrer">

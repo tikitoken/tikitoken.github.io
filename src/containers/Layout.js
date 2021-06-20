@@ -15,7 +15,7 @@ function Layout(props) {
   let location = useLocation()
   let history = useHistory();
 
-  const { bnbPrice, totalPaid, holdings, paid, lastPaid, recent, address, position, setPosition, setHoldings, setPaid, setLastPaid, setRecent, setAddress } = props
+  const { bnbPrice, totalPaid, holdings, paid, lastPaid, recent, address, nextPayoutProgress, setNextPayoutProgress, nextPayoutValue, setNextPayoutValue, setHoldings, setPaid, setLastPaid, setRecent, setAddress } = props
 
   useEffect(() => {
     closeSidebar()
@@ -33,7 +33,7 @@ function Layout(props) {
       <div className="flex flex-col flex-1 w-full">
         <Header address={address} setAddress={setAddress} />
         <Main>
-          {((totalPaid !== 0 && address === '') || (address !== '' && position !== 0)) ? <Suspense fallback={<ThemedSuspense />}>
+          {((totalPaid !== 0 && address === '') || (address !== '' && nextPayoutProgress !== 0)) ? <Suspense fallback={<ThemedSuspense />}>
             <Switch>
               {routes.map((route, i) => {
                 return route.component ? (
@@ -41,7 +41,7 @@ function Layout(props) {
                     key={i}
                     exact={true}
                     path={`${route.path}`}
-                    render={(props) => <route.component {...props} bnbPrice={bnbPrice} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} position={position} setPosition={setPosition} />}
+                    render={(props) => <route.component {...props} bnbPrice={bnbPrice} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} />}
                   />
                 ) : null
               })}
