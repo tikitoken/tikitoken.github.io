@@ -15,7 +15,7 @@ function Layout(props) {
   let location = useLocation()
   let history = useHistory();
 
-  const { bnbPrice, totalPaid, holdings, paid, pending, recent, address, position, setPosition, setHoldings, setPaid, setPending, setRecent, setAddress } = props
+  const { bnbPrice, totalPaid, holdings, paid, lastPaid, recent, address, position, setPosition, setHoldings, setPaid, setLastPaid, setRecent, setAddress } = props
 
   useEffect(() => {
     closeSidebar()
@@ -33,7 +33,7 @@ function Layout(props) {
       <div className="flex flex-col flex-1 w-full">
         <Header address={address} setAddress={setAddress} />
         <Main>
-          {((totalPaid !== 0 && address === '') || (address !== '' && position !== 'N/A')) ? <Suspense fallback={<ThemedSuspense />}>
+          {((totalPaid !== 0 && address === '') || (address !== '' && position !== 0)) ? <Suspense fallback={<ThemedSuspense />}>
             <Switch>
               {routes.map((route, i) => {
                 return route.component ? (
@@ -41,7 +41,7 @@ function Layout(props) {
                     key={i}
                     exact={true}
                     path={`${route.path}`}
-                    render={(props) => <route.component {...props} bnbPrice={bnbPrice} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} position={position} setPosition={setPosition} />}
+                    render={(props) => <route.component {...props} bnbPrice={bnbPrice} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} position={position} setPosition={setPosition} />}
                   />
                 ) : null
               })}

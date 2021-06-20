@@ -2,7 +2,6 @@ import React, { useState, lazy, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { ethers } from 'ethers'
 
-import TimeDifference from './utils/timeDifference'
 
 import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer'
 const Layout = lazy(() => import('./containers/Layout'))
@@ -25,9 +24,8 @@ function App() {
 
   const [holdings, setHoldings] = useState(0)
   const [paid, setPaid] = useState(0)
-  const [pending, setPending] = useState(0)
-  const [position, setPosition] = useState('N/A')
-  // const [timeSincePayout, setTimeSincePayout] = useState('N/A')
+  const [lastPaid, setLastPaid] = useState(0)
+  const [position, setPosition] = useState(0)
 
   const [refreshAddressData, setRefreshAddressData] = useState(true)
   const [refreshTimeData, setRefreshTimeData] = useState(true)
@@ -67,15 +65,18 @@ function App() {
   // uint256 secondsUntilAutoClaimAvailable
 
   const callContract = () => {
-    tikiContract.balanceOf(address).then(balance => {
-      setHoldings((balance / 1e18).toFixed(0))
-        tikiContract.getAccountDividendsInfo(address).then(result => {
-          setPaid( (parseInt(result[4]._hex, 16) - parseInt(result[3]._hex, 16)) )
-          setPending(parseInt(result[3]._hex, 16))
-          setPosition(parseInt(result[2]._hex, 16))
-          setTimeout(function(){ setRefreshAddressData(!refreshAddressData) }, 9000);
+    tikiContract.getNumberOfDividendTokenHolders().then(holders => {
+      tikiContract.balanceOf(address).then(balance => {
+        setHoldings((balance / 1e18).toFixed(0))
+          tikiContract.getAccountDividendsInfo(address).then(result => {
+            setPaid( parseInt(result[4]._hex, 16) )
+            setLastPaid(parseInt(result[5]._hex, 16)*1000)
+            setPosition((100-((parseInt(result[2]._hex, 16)/parseInt(holders._hex, 16))*100)).toFixed(0))
+            setTimeout(function(){ setRefreshAddressData(!refreshAddressData) }, 9000);
+          })
         })
-    })
+      })
+    }
     // tikiContract.getAccountDividendsInfo(address).then((result) =>{
     //   console.log(result)
     //   const getTotalClaimed = trackerContract.withdrawnDividendOf(address).then((result) =>{
@@ -83,14 +84,13 @@ function App() {
     //     setTimeout(function(){ setRefreshAddressData(!refreshAddressData) }, 9000);
     //   })
     // })
-  }
 
   return (
     <>
       <Router>
         <AccessibleNavigationAnnouncer />
         <Switch>
-          <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} pending={pending} setPending={setPending} position={position} setPosition={setPosition} totalPaid={totalPaid} bnbPrice={bnbPrice} />)} />
+          <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} position={position} setPosition={setPosition} totalPaid={totalPaid} bnbPrice={bnbPrice} />)} />
         </Switch>
       </Router>
     </>
