@@ -150,7 +150,7 @@ function Dashboard(props) {
             <div>
               <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Next Payout Loading</p>
               
-              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{Date.now()-lastPaid >= 3600000 ? `${nextPayoutProgress}% | ` : `${(((Date.now()-lastPaid)/3600000)*100).toFixed(0)}% | `}<span className="text-yellow-300">{nextPayoutValue} BNB</span></p>
+              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{nextPayoutValue} BNB</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</p>
             </div>
           </CardBody>
         </Card>
