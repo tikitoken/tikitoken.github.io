@@ -123,7 +123,7 @@ function Dashboard(props) {
           />
         </InfoCard>
 
-        <InfoCard className="" title="Last Payout" value={`${TimeDifference(Date.now(), lastPaid)}`}>
+        <InfoCard className="" title="Last Payout" value={`${lastPaid === 0 ? 'Never' : TimeDifference(Date.now(), lastPaid)}`}>
             <RoundIcon
               icon={MoneyIcon}
               iconColorClass="text-blue-500 dark:text-blue-100"
