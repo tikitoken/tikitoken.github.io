@@ -70,7 +70,7 @@ function App() {
       tikiContract.balanceOf(address).then(balance => {
         setHoldings((balance / 1e18).toFixed(0))
           tikiContract.getAccountDividendsInfo(address).then(result => {
-            setPaid( parseInt(result[4]._hex, 16) )
+            setPaid( parseInt(result[4]._hex, 16) - parseInt(result[3]._hex, 16) )
             setLastPaid(parseInt(result[5]._hex, 16)*1000)
             setNextPayoutProgress((100-((parseInt(result[2]._hex, 16)/parseInt(holders._hex, 16))*100)).toFixed(0))
             setNextPayoutValue( (parseInt(result[3]._hex, 16)/1e18).toFixed(4) )

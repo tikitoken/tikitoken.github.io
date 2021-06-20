@@ -117,13 +117,13 @@ function Dashboard(props) {
         <Card>
           <CardBody className="flex items-center">
             <RoundIcon
-              icon={CartIcon}
-              iconColorClass="text-yellow-500 dark:text-yellow-100"
-              bgColorClass="bg-yellow-100 dark:bg-yellow-500"
+              icon={PeopleIcon}
+              iconColorClass="text-green-500 dark:text-green-100"
+              bgColorClass="bg-green-100 dark:bg-green-500"
               className="mr-4"
             />
             <div>
-              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your BNB Earned</p>
+              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Paid Out To You</p>
               
               <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{`${(paid / 1e18).toFixed(4)}`} BNB</span></p>
             </div>
