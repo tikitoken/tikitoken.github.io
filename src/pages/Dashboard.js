@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import _ from "lodash";
 
 import CTA from '../components/CTA'
 import InfoCard from '../components/Cards/InfoCard'
-import ChartCard from '../components/Chart/ChartCard'
-import { Doughnut, Line } from 'react-chartjs-2'
-import ChartLegend from '../components/Chart/ChartLegend'
 import PageTitle from '../components/Typography/PageTitle'
-import { ChatIcon, CartIcon, MoneyIcon, PeopleIcon, HeartIcon, CoinsIcon } from '../icons'
+import { CartIcon, MoneyIcon, PeopleIcon, HeartIcon, CoinsIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
 import response from '../utils/demo/tableData'
 import {
@@ -16,64 +14,14 @@ import {
 } from '@windmill/react-ui'
 
 import TimeDifference from '../utils/timeDifference'
+import numberWithCommas from '../utils/numberWithCommas'
 
-export const lineLegends = [
-  { title: 'BNB Paid Out', color: 'bg-green-400' },
-]
-
-function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-
-const lineOptions = {
-  data: {
-    labels: ['1 Week', '2 Weeks', '3 Weeks', '4 Weeks', '5 Weeks', '6 Weeks'],
-    datasets: [
-      {
-        label: 'Paid Out',
-        fill: false,
-        /**
-         * These colors come from Tailwind CSS palette
-         * https://tailwindcss.com/docs/customizing-colors/#default-color-palette
-         */
-        backgroundColor: 'green',
-        borderColor: 'lime',
-        data: [50, 50, 50, 50, 50, 50],
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-    tooltips: {
-      mode: 'index',
-      intersect: false,
-    },
-    hover: {
-      mode: 'nearest',
-      intersect: true,
-    },
-    scales: {
-      x: {
-        display: true,
-        scaleLabel: {
-          display: true,
-          labelString: 'Month',
-        },
-      },
-      y: {
-        display: true,
-        scaleLabel: {
-          display: true,
-          labelString: 'Value',
-        },
-      },
-    },
-  },
-  legend: {
-    display: false,
-  },
-}
+import {
+  CircularProgressbar,
+  CircularProgressbarWithChildren,
+  buildStyles
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 function Dashboard(props) {
 
@@ -96,13 +44,15 @@ function Dashboard(props) {
   const resultsPerPage = 0
   const totalResults = response.length
 
-  const { bnbPrice, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
+  const { bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
+  
+  const payoutText = <><span className="text-yellow-300">{nextPayoutValue} BNB</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
 
   return (
     <div className="pb-10">
       <PageTitle className="text-3xl">TIKI Earnings Manager</PageTitle>
 
-      <CTA address={address} holdings={holdings} />
+      <CTA holdings={holdings} address={(address !== "" && bnbHoldings !== 0) ? `${address} | ${bnbHoldings} BNB ($${numberWithCommas((bnbHoldings*bnbPrice).toFixed(2))})` : address} />
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         <InfoCard title="Your TIKI Holdings" value={`${numberWithCommas(holdings)} TIKI`}>
@@ -123,7 +73,7 @@ function Dashboard(props) {
               className="mr-4"
             />
             <div>
-              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Paid Out To You</p>
+              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Total BNB Paid</p>
               
               <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{`${(paid / 1e18).toFixed(4)}`} BNB</span></p>
             </div>
@@ -150,7 +100,7 @@ function Dashboard(props) {
             <div>
               <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Next Payout Loading</p>
               
-              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{nextPayoutValue} BNB</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</p>
+              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{payoutText}</p>
             </div>
           </CardBody>
         </Card>
@@ -167,10 +117,89 @@ function Dashboard(props) {
           <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/bnb.png')} />
           <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid Out To $TIKI Holders</p><br/>
           <p className="text-green-400 dark:text-green-400 text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">BNB</span><br/> = ${numberWithCommas((bnbPrice*totalPaid).toFixed(0))}</p>
+          {/* <div style={{ width: 200, height: 200 }}>
+            <CircularProgressbarWithChildren
+              value={75}
+              strokeWidth={8}
+              styles={buildStyles({
+                pathColor: "#f00",
+                trailColor: "transparent"
+              })}
+            >
+              <div style={{ width: "84%" }}>
+                <ChangingProgressProvider values={Array.from(Array(100).keys())}>
+                  {percentage => (
+                  <CircularProgressbarWithChildren
+                    value={nextPayoutProgress}
+                    text={payoutText}
+                    strokeWidth={10}
+                    styles={buildStyles({
+                      strokeLinecap: "butt"
+                    })}
+                  >
+                    <RadialSeparators
+                      count={12}
+                      style={{
+                        background: "#fff",
+                        width: "2px",
+                        // This needs to be equal to props.strokeWidth
+                        height: `${10}%`
+                      }}
+                    />
+                  </CircularProgressbarWithChildren>
+                    )}
+                </ChangingProgressProvider>
+              </div>
+            </CircularProgressbarWithChildren>
+          </div> */}
         </CardBody>
       </Card>
     </div>
   )
 }
+
+function Separator(props) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        height: "100%",
+        transform: `rotate(${props.turns}turn)`
+      }}
+    >
+      <div style={props.style} />
+    </div>
+  );
+}
+
+function RadialSeparators(props) {
+  const turns = 1 / props.count;
+  return _.range(props.count).map(index => (
+    <Separator turns={index * turns} style={props.style} />
+  ));
+}
+
+class ChangingProgressProvider extends React.Component {
+  static defaultProps = {
+    interval: 1000
+  };
+
+  state = {
+    valuesIndex: 0
+  };
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        valuesIndex: (this.state.valuesIndex + 1) % this.props.values.length
+      });
+    }, this.props.interval);
+  }
+
+  render() {
+    return this.props.children(this.props.values[this.state.valuesIndex]);
+  }
+}
+
 
 export default Dashboard

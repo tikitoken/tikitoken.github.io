@@ -3,7 +3,6 @@ import routes from '../../routes/sidebar'
 import { NavLink, Route } from 'react-router-dom'
 import * as Icons from '../../icons'
 import SidebarSubmenu from './SidebarSubmenu'
-import { Button } from '@windmill/react-ui'
 
 function Icon({ icon, ...props }) {
   const Icon = Icons[icon]
@@ -13,8 +12,8 @@ function Icon({ icon, ...props }) {
 function SidebarContent() {
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
-      <a className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
-        The TIKI Bar
+      <a className="flex ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
+        <img className="mr-2 w-6 h-8" src="https://uploads-ssl.webflow.com/60c7783699e1051d74062f79/60c77ebf3b808e1b80cdb0cb_Tiki03-p-500.png" /><span className="self-center">The TIKI Bar</span>
       </a>
       <ul className="mt-6">
         {routes.map((route) => {
