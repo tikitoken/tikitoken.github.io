@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import _ from "lodash";
 
 import CTA from '../components/CTA'
 import InfoCard from '../components/Cards/InfoCard'
@@ -15,13 +14,6 @@ import {
 
 import TimeDifference from '../utils/timeDifference'
 import numberWithCommas from '../utils/numberWithCommas'
-
-import {
-  CircularProgressbar,
-  CircularProgressbarWithChildren,
-  buildStyles
-} from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
 
 function Dashboard(props) {
 
