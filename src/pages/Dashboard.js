@@ -48,11 +48,14 @@ function Dashboard(props) {
   
   const payoutText = <><span className="text-yellow-300">{nextPayoutValue} BNB</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
 
+  const earningsInDollars = (holdings/1000000000)*1000000
+  const earningsInBnb = earningsInDollars/bnbPrice
+
   return (
     <div className="pb-10">
       <PageTitle className="text-3xl">TIKI Earnings Manager</PageTitle>
 
-      <CTA holdings={holdings} address={(address !== "" && bnbHoldings !== 0) ? `${address} | ${bnbHoldings} BNB ($${numberWithCommas((bnbHoldings*bnbPrice).toFixed(2))})` : address} />
+      <CTA holdings={holdings} address={(address !== "" && bnbHoldings !== 0) ? `${address} | BNB In Your Wallet: ${bnbHoldings} ($${numberWithCommas((bnbHoldings*bnbPrice).toFixed(2))})` : address} />
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         <InfoCard title="Your TIKI Holdings" value={`${numberWithCommas(holdings)} TIKI`}>
@@ -112,93 +115,38 @@ function Dashboard(props) {
         </Button>
       </a>
 
-      <Card>
-        <CardBody className="flex flex-col text-center items-center">
-          <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/bnb.png')} />
-          <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid Out To $TIKI Holders</p><br/>
-          <p className="text-green-400 dark:text-green-400 text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">BNB</span><br/> = ${numberWithCommas((bnbPrice*totalPaid).toFixed(0))}</p>
-          {/* <div style={{ width: 200, height: 200 }}>
-            <CircularProgressbarWithChildren
-              value={75}
-              strokeWidth={8}
-              styles={buildStyles({
-                pathColor: "#f00",
-                trailColor: "transparent"
-              })}
-            >
-              <div style={{ width: "84%" }}>
-                <ChangingProgressProvider values={Array.from(Array(100).keys())}>
-                  {percentage => (
-                  <CircularProgressbarWithChildren
-                    value={nextPayoutProgress}
-                    text={payoutText}
-                    strokeWidth={10}
-                    styles={buildStyles({
-                      strokeLinecap: "butt"
-                    })}
-                  >
-                    <RadialSeparators
-                      count={12}
-                      style={{
-                        background: "#fff",
-                        width: "2px",
-                        // This needs to be equal to props.strokeWidth
-                        height: `${10}%`
-                      }}
-                    />
-                  </CircularProgressbarWithChildren>
-                    )}
-                </ChangingProgressProvider>
-              </div>
-            </CircularProgressbarWithChildren>
-          </div> */}
-        </CardBody>
-      </Card>
+      <div className="flex">
+        <Card className="w-1/2 mr-3">
+          <CardBody className="flex flex-col text-center items-center">
+            <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/money.png')} />
+            <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Your {numberWithCommas(holdings)} TIKI Earns:</p><br/>
+            <div className="flex">
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas(earningsInBnb.toFixed(2))} BNB</span> (${numberWithCommas((earningsInDollars).toFixed(2))})</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Day</span>
+            </div>
+            <div className="flex">
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas((earningsInBnb*7).toFixed(2))} BNB</span> (${numberWithCommas((earningsInDollars*7).toFixed(2))})</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Week</span>
+            </div>
+            <div className="flex">
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas((earningsInBnb*30).toFixed(2))} BNB</span> (${numberWithCommas((earningsInDollars*30).toFixed(2))})</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Month</span>
+            </div>
+            <div className="flex">
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas((earningsInBnb*365).toFixed(2))} BNB</span> (${numberWithCommas((earningsInDollars*365).toFixed(2))})</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Year</span>
+            </div>
+            <br/>
+            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on $10m trading volume</p>
+          </CardBody>
+        </Card>
+
+        <Card className="w-1/2">
+          <CardBody className="flex flex-col text-center items-center">
+            <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/bnb.png')} />
+            <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid To TIKI Holders</p><br/>
+            <p className="text-green-400 dark:text-green-400 text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">BNB</span><br/> = ${numberWithCommas((bnbPrice*totalPaid).toFixed(0))}</p>
+          </CardBody>
+        </Card>
+      </div>
     </div>
   )
-}
-
-function Separator(props) {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        height: "100%",
-        transform: `rotate(${props.turns}turn)`
-      }}
-    >
-      <div style={props.style} />
-    </div>
-  );
-}
-
-function RadialSeparators(props) {
-  const turns = 1 / props.count;
-  return _.range(props.count).map(index => (
-    <Separator turns={index * turns} style={props.style} />
-  ));
-}
-
-class ChangingProgressProvider extends React.Component {
-  static defaultProps = {
-    interval: 1000
-  };
-
-  state = {
-    valuesIndex: 0
-  };
-
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({
-        valuesIndex: (this.state.valuesIndex + 1) % this.props.values.length
-      });
-    }, this.props.interval);
-  }
-
-  render() {
-    return this.props.children(this.props.values[this.state.valuesIndex]);
-  }
 }
 
 
