@@ -17,7 +17,6 @@ import numberWithCommas from '../utils/numberWithCommas'
 
 function Dashboard(props) {
 
-
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
 
@@ -107,8 +106,8 @@ function Dashboard(props) {
         </Button>
       </a>
 
-      <div className="flex">
-        <Card className="w-1/2 mr-3">
+      <div className="grid xs:grid-cols-1 lg:grid-cols-2 gap-4">
+        <Card>
           <CardBody className="flex flex-col text-center items-center">
             <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/money.png')} />
             <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Your {numberWithCommas(holdings)} TIKI Earns:</p><br/>
@@ -129,11 +128,11 @@ function Dashboard(props) {
           </CardBody>
         </Card>
 
-        <Card className="w-1/2">
+        <Card>
           <CardBody className="flex flex-col text-center items-center">
             <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/bnb.png')} />
             <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid To TIKI Holders</p><br/>
-            <p className="text-green-400 dark:text-green-400 text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">BNB</span><br/> = ${numberWithCommas((bnbPrice*totalPaid).toFixed(0))}</p>
+            <p className="text-green-400 dark:text-green-400 text-4xl md:text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">BNB</span><br/> = ${numberWithCommas((bnbPrice*totalPaid).toFixed(0))}</p>
           </CardBody>
         </Card>
       </div>

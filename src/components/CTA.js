@@ -2867,7 +2867,7 @@ function CTA({ address, holdings }) {
   const addrFilledColorConditional = (address !== undefined && address !== '' && address.substring(0, 2) === '0x') ? 'bg-green-600' : 'bg-purple-600'
 
   return (
-    <>
+    <div className="hidden lg:block">
 
     {airdropDue !== 0 ?
     
@@ -2897,7 +2897,7 @@ function CTA({ address, holdings }) {
         Buy TIKI <span dangerouslySetInnerHTML={{ __html: '&RightArrow;' }}></span>
       </a>
     </span>
-    </>
+    </div>
   )
 }
 
