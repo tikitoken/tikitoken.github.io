@@ -39,18 +39,20 @@ async function getChunksAndMergeThenReturnHighest(chunks, currBlock, hoursPerChu
     chunkData.push(currChunk.result)
   }
   chunkData = chunkData.flat()
-  const highest = chunkData.sort(function(a, b) {return a.value - b.value;}).slice(-10);
+  const highest = chunkData.sort(function(a, b) {return a.value - b.value;}).slice(-20);
   for (const buyer of highest) {
     const tx = await provider.getTransaction(buyer.hash)
     // if (tx.value === 0) {
     //   const response = await fetch('https://api.nomics.com/v1/currencies/ticker?key=21a7f0fb8445fac8c9eda8ccea938788046581d2&ids=TIKI3&interval=1d&convert=USD')
     //   const res = await response.json()
     //   const tiki = res[0]
-    //   buyer.bnbValue = tiki.price*(buyer.value/1e18)
+    //   buyer.bnbValue = 0
+    //   buyer.altValue = tiki.price*(buyer.value/1e18)
     // }
     buyer.bnbValue = tx.value/1e18
   }
-  return highest
+
+  return highest.filter(buyer => buyer.bnbValue !== 0).slice(0,9)
 }
 
 function App() {
@@ -88,7 +90,7 @@ function App() {
       response.json().then(priceJson => {
         setBnbPrice(priceJson.binancecoin.usd)
         provider.getBlockNumber().then(currBlock => {
-          getChunksAndMergeThenReturnHighest((48/3), currBlock, 3).then(highest => {
+          getChunksAndMergeThenReturnHighest((40/8), currBlock, 8).then(highest => {
             setHighestBuyers(highest.reverse())
           })
         })
