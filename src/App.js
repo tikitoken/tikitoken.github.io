@@ -42,23 +42,28 @@ async function getChunksAndMergeThenReturnHighest(chunks, currBlock, hoursPerChu
   const highest = chunkData.sort(function(a, b) {return a.value - b.value;}).slice(-20);
   for (const buyer of highest) {
     const tx = await provider.getTransaction(buyer.hash)
-    // if (tx.value === 0) {
-    //   const response = await fetch('https://api.nomics.com/v1/currencies/ticker?key=21a7f0fb8445fac8c9eda8ccea938788046581d2&ids=TIKI3&interval=1d&convert=USD')
-    //   const res = await response.json()
-    //   const tiki = res[0]
-    //   buyer.bnbValue = 0
-    //   buyer.altValue = tiki.price*(buyer.value/1e18)
-    // }
-    buyer.bnbValue = tx.value/1e18
+    try {
+      buyer.bnbValue = tx.value/1e18
+    } catch (e) {
+      continue
+    }
   }
 
   return highest.filter(buyer => buyer.bnbValue !== 0).slice(0,9)
+}
+
+async function getTikiPrice() {
+  const response = await fetch('https://api.nomics.com/v1/currencies/ticker?key=21a7f0fb8445fac8c9eda8ccea938788046581d2&ids=TIKI3&interval=1d&convert=USD')
+  const res = await response.json()
+  const tiki = res[0]
+  return tiki.price
 }
 
 function App() {
   const [totalPaid, setTotalPaid] = useState(0)
   const [bnbHoldings, setBnbHoldings] = useState(0)
   const [bnbPrice, setBnbPrice] = useState(0)
+  const [tikiPrice, setTikiPrice] = useState(0)
 
   const [highestBuyers, setHighestBuyers] = useState([])
 
@@ -90,7 +95,7 @@ function App() {
       response.json().then(priceJson => {
         setBnbPrice(priceJson.binancecoin.usd)
         provider.getBlockNumber().then(currBlock => {
-          getChunksAndMergeThenReturnHighest((40/8), currBlock, 8).then(highest => {
+          getChunksAndMergeThenReturnHighest(42/3, currBlock, 3).then(highest => {
             setHighestBuyers(highest.reverse())
           })
         })
@@ -124,15 +129,18 @@ function App() {
     tikiContract.getNumberOfDividendTokenHolders().then(holders => {
       tikiContract.balanceOf(address).then(balance => {
         setHoldings((balance / 1e18).toFixed(0))
-          tikiContract.getAccountDividendsInfo(address).then(result => {
-            provider.getBalance(address).then(balance => {
-              setBnbHoldings((balance/1e18).toFixed(4))
-              setPaid( parseInt(result[4]._hex, 16) - parseInt(result[3]._hex, 16) )
-              setLastPaid(parseInt(result[5]._hex, 16)*1000)
-              setNextPayoutProgress((100-((parseInt(result[2]._hex, 16)/parseInt(holders._hex, 16))*100)).toFixed(0))
-              setNextPayoutValue( (parseInt(result[3]._hex, 16)/1e18).toFixed(4) )
-              window.clearTimeout(timer);
-              timer = window.setTimeout(function(){ setRefreshAddressData(!refreshAddressData) }, 9000);
+          getTikiPrice().then(price => {
+            setTikiPrice(price)
+            tikiContract.getAccountDividendsInfo(address).then(result => {
+              provider.getBalance(address).then(balance => {
+                setBnbHoldings((balance/1e18).toFixed(4))
+                setPaid( parseInt(result[4]._hex, 16) - parseInt(result[3]._hex, 16) )
+                setLastPaid(parseInt(result[5]._hex, 16)*1000)
+                setNextPayoutProgress((100-((parseInt(result[2]._hex, 16)/parseInt(holders._hex, 16))*100)).toFixed(0))
+                setNextPayoutValue( (parseInt(result[3]._hex, 16)/1e18).toFixed(4) )
+                window.clearTimeout(timer);
+                timer = window.setTimeout(function(){ setRefreshAddressData(!refreshAddressData) }, 9000);
+              })
             })
           })
         })
@@ -170,7 +178,7 @@ function App() {
       <Router>
         <AccessibleNavigationAnnouncer />
         <Switch>
-          <Route path="/" render={(props) => (<Layout {...props} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} totalPaid={totalPaid} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} bnbHoldings={bnbHoldings} bnbPrice={bnbPrice} highestBuyers={highestBuyers} />)} />
+          <Route path="/" render={(props) => (<Layout {...props} tikiPrice={tikiPrice} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} totalPaid={totalPaid} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} bnbHoldings={bnbHoldings} bnbPrice={bnbPrice} highestBuyers={highestBuyers} />)} />
         </Switch>
       </Router>
     </>

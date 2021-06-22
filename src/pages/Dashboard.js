@@ -36,12 +36,20 @@ function Dashboard(props) {
   const resultsPerPage = 0
   const totalResults = response.length
 
-  const { highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
+  const { tikiPrice, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
   
   const payoutText = <><span className="text-yellow-300">{nextPayoutValue} BNB</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
 
   const earningsInDollars = (holdings/1000000000)*550000
   const earningsInBnb = earningsInDollars/bnbPrice
+
+  const compoundedTikiAfterNDays = (starting, days) => {
+    let accumulatedTiki = Number(starting)
+    for (let i = 0; i < days; i++) {
+      accumulatedTiki = accumulatedTiki + (((accumulatedTiki/1000000000)*550000)/tikiPrice)
+    }
+    return accumulatedTiki.toFixed(0)
+  }
 
   return (
     <div className="pb-10">
@@ -109,6 +117,15 @@ function Dashboard(props) {
       </a>
 
       <div className="grid xs:grid-cols-1 lg:grid-cols-2 gap-4">
+
+        <Card className="col-span-2">
+          <CardBody className="flex flex-col text-center items-center">
+            <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/bnb.png')} />
+            <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid To TIKI Holders</p><br/>
+            <p className="text-green-400 dark:text-green-400 text-4xl md:text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">BNB</span><br/> = ${numberWithCommas((bnbPrice*totalPaid).toFixed(0))}</p>
+          </CardBody>
+        </Card>
+
         <Card>
           <CardBody className="flex flex-col text-center items-center">
             <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/money.png')} />
@@ -129,12 +146,24 @@ function Dashboard(props) {
             <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on $5m trading volume</p>
           </CardBody>
         </Card>
-
         <Card>
           <CardBody className="flex flex-col text-center items-center">
-            <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/bnb.png')} />
-            <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid To TIKI Holders</p><br/>
-            <p className="text-green-400 dark:text-green-400 text-4xl md:text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">BNB</span><br/> = ${numberWithCommas((bnbPrice*totalPaid).toFixed(0))}</p>
+            <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/money.png')} />
+            <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">By Reinvesting Dividends Every Day, Your {numberWithCommas(holdings)} TIKI Becomes:</p><br/>
+            <div className="flex">
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas(compoundedTikiAfterNDays(holdings, 7))} TIKI</span> ({(compoundedTikiAfterNDays(holdings, 7)/holdings).toFixed(2)}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In a Week</span>
+            </div>
+            <div className="flex">
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas(compoundedTikiAfterNDays(holdings, 30))} TIKI</span> ({(compoundedTikiAfterNDays(holdings, 30)/holdings).toFixed(2)}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In a Month</span>
+            </div>
+            <div className="flex">
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas(compoundedTikiAfterNDays(holdings, 60))} TIKI</span> ({(compoundedTikiAfterNDays(holdings, 60)/holdings).toFixed(2)}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 2 Months</span>
+            </div>
+            <div className="flex">
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas(compoundedTikiAfterNDays(holdings, 180))} TIKI</span> ({(compoundedTikiAfterNDays(holdings, 180)/holdings).toFixed(2)}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 6 Months</span>
+            </div>
+            <br/>
+            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on current $TIKI price</p>
           </CardBody>
         </Card>
       </div>
