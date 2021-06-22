@@ -31,7 +31,7 @@ async function getChunksAndMerge(chunks, currBlock, hoursPerChunk) {
   const chunksArray = Array.from(Array(chunks).keys())
   const chunkIterator = chunksArray[Symbol.iterator]();
   for (const chunk of chunkIterator) {
-    const currChunkRes = await fetch(`http://api.bscscan.com/api?module=account&action=tokentx&address=0xc21e7663a8ca376d0fb90025698ae32d57256fce&startblock=${currBlock-Math.floor((((chunk+1)*hoursPerChunk)*60*60)/3)}&endblock=${currBlock-Math.floor(((chunk*hoursPerChunk)*60*60)/3)}&sort=asc&apikey=${apiKey}`)
+    const currChunkRes = await fetch(`https://api.bscscan.com/api?module=account&action=tokentx&address=0xc21e7663a8ca376d0fb90025698ae32d57256fce&startblock=${currBlock-Math.floor((((chunk+1)*hoursPerChunk)*60*60)/3)}&endblock=${currBlock-Math.floor(((chunk*hoursPerChunk)*60*60)/3)}&sort=asc&apikey=${apiKey}`)
     const currChunk = await currChunkRes.json()
     chunkData.push(currChunk.result)
   }
