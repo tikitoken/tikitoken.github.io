@@ -47,7 +47,7 @@ const routes = [
     component: Modals,
   },
   {
-    path: '/transactions',
+    path: '/tikituesday',
     component: Tables,
   },
   {

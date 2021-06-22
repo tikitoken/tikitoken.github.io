@@ -9,7 +9,8 @@ import response from '../utils/demo/tableData'
 import {
   Card,
   CardBody,
-  Button
+  Button,
+  Modal, ModalHeader, ModalBody, ModalFooter
 } from '@windmill/react-ui'
 
 import TimeDifference from '../utils/timeDifference'
@@ -35,7 +36,7 @@ function Dashboard(props) {
   const resultsPerPage = 0
   const totalResults = response.length
 
-  const { bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
+  const { highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
   
   const payoutText = <><span className="text-yellow-300">{nextPayoutValue} BNB</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
 
@@ -44,6 +45,7 @@ function Dashboard(props) {
 
   return (
     <div className="pb-10">
+
       <PageTitle className="text-3xl">TIKI Earnings Manager</PageTitle>
 
       <CTA holdings={holdings} address={(address !== "" && bnbHoldings !== 0) ? `${address} | BNB In Your Wallet: ${bnbHoldings} ($${numberWithCommas((bnbHoldings*bnbPrice).toFixed(2))})` : address} />

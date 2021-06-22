@@ -18,11 +18,18 @@ import {
 } from '@windmill/react-ui'
 import { EditIcon, TrashIcon } from '../icons'
 
-import response from '../utils/demo/tableData'
-// make a copy of the data, for the second table
-const response2 = response.concat([])
+import numberWithCommas from '../utils/numberWithCommas'
 
-function Tables({ address }) {
+
+  import response from '../utils/demo/tableData'
+
+function prettyDate2(time){
+  var date = new Date(parseInt(time));
+  var localeSpecificTime = date.toLocaleTimeString();
+  return localeSpecificTime.replace(/:\d+ /, ' ');
+}
+
+function Tables({ address, highestBuyers, bnbHoldings, bnbPrice }) {
   /**
    * DISCLAIMER: This code could be badly improved, but for the sake of the example
    * and readability, all the logic for both table are here.
@@ -33,15 +40,15 @@ function Tables({ address }) {
 
   // setup pages control for every table
   const [pageTable1, setPageTable1] = useState(1)
-  const [pageTable2, setPageTable2] = useState(1)
+  const [pageTable2, setPageTable2] = useState(2)
 
   // setup data for every table
-  const [dataTable1, setDataTable1] = useState([])
-  const [dataTable2, setDataTable2] = useState([])
+  // const [dataTable1, setDataTable1] = useState(highestBuyers(0, 10))
+  // const [dataTable2, setDataTable2] = useState(highestBuyers(10, 20))
 
   // pagination setup
   const resultsPerPage = 10
-  const totalResults = response.length
+  const totalResults = highestBuyers.length
 
   // pagination change control
   function onPageChangeTable1(p) {
@@ -53,66 +60,58 @@ function Tables({ address }) {
     setPageTable2(p)
   }
 
-  // on page change, load new sliced data
-  // here you would make another server request for new data
-  useEffect(() => {
-    setDataTable1(response.slice((pageTable1 - 1) * resultsPerPage, pageTable1 * resultsPerPage))
-  }, [pageTable1])
-
-  // on page change, load new sliced data
-  // here you would make another server request for new data
-  useEffect(() => {
-    setDataTable2(response2.slice((pageTable2 - 1) * resultsPerPage, pageTable2 * resultsPerPage))
-  }, [pageTable2])
-
   return (
     <>
-      <PageTitle>Tracking (COMING SOON)</PageTitle>
+      <PageTitle>Tiki Tuesday Leaderboards</PageTitle>
 
-      <CTA address={address} />
+      <CTA address={(address !== "" && bnbHoldings !== 0) ? `${address} | BNB In Your Wallet: ${bnbHoldings} ($${numberWithCommas((bnbHoldings*bnbPrice).toFixed(2))})` : address} />
 
-      <SectionTitle>Your Historical Payout Transactions</SectionTitle>
+      <SectionTitle>Biggest Buyers - <span className="text-yellow-300">20 BNB</span> Goes To <span className="text-green-400">Rank #1</span> At The End of Tuesday</SectionTitle>
       <TableContainer className="mb-8">
-        <Table>
+        {highestBuyers.length !== 0 ? <Table>
           <TableHeader>
             <tr>
-              <TableCell>Hash</TableCell>
+              <TableCell>Transaction</TableCell>
               <TableCell>Amount</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell>Rank</TableCell>
               <TableCell>Date</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
-            {dataTable1.map((user, i) => (
-              <TableRow key={i}>
-                <TableCell>
-                  <div className="flex items-center text-sm">
-                    <div>
-                      <p className="font-semibold">0x000000000000000000000000000000000000000</p>
+            {highestBuyers.map((buyer, i) => {
+              if (Object.keys(buyer).length === 0) return null
+              return (
+                <TableRow key={i}>
+                  <TableCell>
+                    <div className="flex items-center text-sm">
+                      <div>
+                        <p className="font-semibold"><a href={`https://bscscan.com/tx/${buyer.hash}`} target="_blank" rel="noopener noreferrer">{buyer.hash}</a></p>
+                      </div>
                     </div>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <span className="text-sm">0 BNB</span>
-                </TableCell>
-                <TableCell>
-                  <Badge type='success'>success</Badge>
-                </TableCell>
-                <TableCell>
-                  <span className="text-sm">{new Date(0).toLocaleDateString()}</span>
-                </TableCell>
-              </TableRow>
-            ))}
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-sm">{numberWithCommas((buyer.value/1e18).toFixed(0))} TIKI</span>
+                  </TableCell>
+                  <TableCell>
+                    <Badge type={i+1 === 1 ? 'success': 'warning'}># {i+1}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-sm">{new Date(buyer.timeStamp*1000).toLocaleDateString()}</span>
+                  </TableCell>
+                </TableRow>
+              )
+            }
+          )}
           </TableBody>
-        </Table>
-        <TableFooter>
+        </Table> : <span className="text-center w-full text-yellow-300 text-2xl">Loading...</span>}
+        {/* <TableFooter>
           <Pagination
             totalResults={totalResults}
             resultsPerPage={resultsPerPage}
             onChange={onPageChangeTable1}
             label="Table navigation"
           />
-        </TableFooter>
+        </TableFooter> */}
       </TableContainer>
     </>
   )

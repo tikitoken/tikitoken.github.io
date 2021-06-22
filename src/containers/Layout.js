@@ -15,7 +15,7 @@ function Layout(props) {
   let location = useLocation()
   let history = useHistory();
 
-  const { bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, recent, address, nextPayoutProgress, setNextPayoutProgress, nextPayoutValue, setNextPayoutValue, setHoldings, setPaid, setLastPaid, setRecent, setAddress } = props
+  const { highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, recent, address, nextPayoutProgress, setNextPayoutProgress, nextPayoutValue, setNextPayoutValue, setHoldings, setPaid, setLastPaid, setRecent, setAddress } = props
 
   useEffect(() => {
     closeSidebar()
@@ -41,7 +41,7 @@ function Layout(props) {
                     key={i}
                     exact={true}
                     path={`${route.path}`}
-                    render={(props) => <route.component {...props} bnbHoldings={bnbHoldings} bnbPrice={bnbPrice} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} />}
+                    render={(props) => <route.component {...props} highestBuyers={highestBuyers} bnbHoldings={bnbHoldings} bnbPrice={bnbPrice} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} />}
                   />
                 ) : null
               })}

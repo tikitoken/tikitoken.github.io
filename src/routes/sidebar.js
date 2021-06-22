@@ -12,9 +12,9 @@ const routes = [
     name: 'Dashboard', // name that appear in Sidebar
   },
   {
-    path: '/transactions',
+    path: '/tikituesday',
     icon: 'TablesIcon',
-    name: 'Tracking',
+    name: 'Tiki Tuesday',
   },
   {
     path: '/information',
