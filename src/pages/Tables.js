@@ -85,7 +85,7 @@ function Tables({ address, highestBuyers, bnbHoldings, bnbPrice }) {
                   <TableCell>
                     <div className="flex items-center text-sm">
                       <div>
-                        <p className="font-semibold"><a href={`https://bscscan.com/tx/${buyer.hash}`} target="_blank" rel="noopener noreferrer">{buyer.hash}</a></p>
+                        <p className="font-semibold"><a href={`https://bscscan.com/tx/${buyer.hash}`} target="_blank" rel="noopener noreferrer">{`${buyer.hash.substring(0, 4)}...${buyer.hash.substring(buyer.hash.length -4, buyer.hash.length)}`}</a></p>
                       </div>
                     </div>
                   </TableCell>
