@@ -66,7 +66,7 @@ function Tables({ address, highestBuyers, bnbHoldings, bnbPrice }) {
 
       <CTA address={(address !== "" && bnbHoldings !== 0) ? `${address} | BNB In Your Wallet: ${bnbHoldings} ($${numberWithCommas((bnbHoldings*bnbPrice).toFixed(2))})` : address} />
 
-      <SectionTitle>Biggest Buyers - <span className="text-yellow-300">20 BNB</span> Goes To <span className="text-green-400">Rank #1</span> At The End of Tuesday</SectionTitle>
+      <SectionTitle>Biggest Buyers - <span className="text-yellow-300">20 BNB</span> Goes To <span className="text-green-400">Rank #1</span> Buyer At The End of Tuesday</SectionTitle>
       <TableContainer className="mb-8">
         {highestBuyers.length !== 0 ? <Table>
           <TableHeader>
@@ -90,7 +90,7 @@ function Tables({ address, highestBuyers, bnbHoldings, bnbPrice }) {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className="text-sm">{numberWithCommas((buyer.value/1e18).toFixed(0))} TIKI</span>
+                    <span className="text-sm">{numberWithCommas((buyer.value/1e18).toFixed(0))} TIKI <span className="text-green-400 semibold">({`$${numberWithCommas((buyer.bnbValue*bnbPrice).toFixed(2))}`})</span></span>
                   </TableCell>
                   <TableCell>
                     <Badge type={i+1 === 1 ? 'success': 'warning'}># {i+1}</Badge>
@@ -103,7 +103,7 @@ function Tables({ address, highestBuyers, bnbHoldings, bnbPrice }) {
             }
           )}
           </TableBody>
-        </Table> : <span className="text-center w-full text-yellow-300 text-2xl">Loading...</span>}
+        </Table> : <span className="text-center w-full text-yellow-300 text-2xl">Scanning Blockchain...</span>}
         {/* <TableFooter>
           <Pagination
             totalResults={totalResults}
