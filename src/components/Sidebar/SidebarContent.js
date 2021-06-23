@@ -34,7 +34,7 @@ function SidebarContent() {
                   ></span>
                 </Route>
                 <Icon className="w-5 h-5" aria-hidden="true" icon={route.icon} />
-                <span className="ml-4">{route.name === "Cards" ? "Information" : route.name}</span>
+                <span className="ml-4">{route.name === "Cards" ? "Recovery" : route.name}</span>
               </NavLink>
             </li>)
           )

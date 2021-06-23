@@ -31,12 +31,8 @@ const routes = [
     component: Forms,
   },
   {
-    path: '/information',
-    component: Cards,
-  },
-  {
     path: '/recovery',
-    component: Dashboard,
+    component: Cards,
   },
   {
     path: '/presale',
