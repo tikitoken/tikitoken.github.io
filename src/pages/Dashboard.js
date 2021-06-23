@@ -127,7 +127,7 @@ function Dashboard(props) {
         </Card>
 
         <Card>
-          <CardBody className="flex flex-col text-center items-center">
+          <CardBody className="flex flex-col text-center items-center col-span-2 lg:col-span-1">
             <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/money.png')} />
             <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Your {numberWithCommas(holdings)} TIKI Earns:</p><br/>
             <div className="flex">
@@ -147,7 +147,7 @@ function Dashboard(props) {
           </CardBody>
         </Card>
         <Card>
-          <CardBody className="flex flex-col text-center items-center">
+          <CardBody className="flex flex-col text-center items-center col-span-2 lg:col-span-1">
             <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/money.png')} />
             <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">By Reinvesting Dividends Every Day, Your {numberWithCommas(holdings)} TIKI Becomes:</p><br/>
             <div className="flex">
