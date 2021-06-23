@@ -63,7 +63,7 @@ function Cards() {
           <CardBody>
             <p className="mb-4  text-3xl font-semibold">Remaining Balance:</p>
             <p className="text-2xl text-center">
-              You have claimed <span className="text-yellow-300 font-bold">{withdrawn !== null ? withdrawn : 'Loading...'} BNB</span> from the recovery protocol. Your remaining amount to be paid from the recovery protocol is <span className="text-yellow-300 font-bold">{balance !== null ? balance : 'Loading...'} BNB</span>. Please continue to check here as the claimable balance grows to meet your full loss.
+              You have claimed <span className="text-yellow-300 font-bold">{withdrawn !== null ? withdrawn : 'Loading...'} BNB</span> from the recovery protocol. Your total amount to be paid from the recovery protocol is <span className="text-yellow-300 font-bold">{balance !== null ? balance : 'Loading...'} BNB</span>. Please continue to check here as the claimable balance grows to meet your full loss.
             </p>
           </CardBody>
         </Card>
