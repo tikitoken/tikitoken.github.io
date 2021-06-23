@@ -155,24 +155,19 @@ function App() {
 
   return (
     <>
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      {/* <Modal isOpen={isModalOpen} onClose={closeModal}>
         <ModalHeader className="text-center text-4xl -mt-4">Instant Payout Feature</ModalHeader>
         <ModalBody className="text-center text-2xl">
           If you <a href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x9b76D1B12Ff738c113200EB043350022EBf12Ff0" target="_blank" rel="noopener noreferrer"><span className="semibold text-green-400">BUY more TIKI (click here)</span></a>, your payout is <span className="text-red-400">INSTANTLY</span> sent to you!
         </ModalBody>
         <ModalFooter className="-mt-2">
-          {/* I don't like this approach. Consider passing a prop to ModalFooter
-           * that if present, would duplicate the buttons in a way similar to this.
-           * Or, maybe find some way to pass something like size="large md:regular"
-           * to Button
-           */}
           <div className="hidden sm:block w-full text-center mb-4">
             <Button className="w-3/4" onClick={closeModal}>
               Got It
             </Button>
           </div>
         </ModalFooter>
-      </Modal>
+      </Modal> */}
 
       <Router>
         <AccessibleNavigationAnnouncer />
