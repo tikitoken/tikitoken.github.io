@@ -105,7 +105,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (address.substring(0,2) === '0x' || address.substring(0,2) === '0X') {
+    if (ethers.utils.isAddress(address)) {
       if (localStorage.getItem('address') !== address) localStorage.setItem('address', address)
       callContract(address)
     }

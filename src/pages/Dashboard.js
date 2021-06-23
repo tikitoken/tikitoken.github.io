@@ -116,7 +116,7 @@ function Dashboard(props) {
         </Button>
       </a>
 
-      <div className="grid xs:grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4">
 
         <Card className="col-span-2">
           <CardBody className="flex flex-col text-center items-center">
@@ -126,8 +126,8 @@ function Dashboard(props) {
           </CardBody>
         </Card>
 
-        <Card>
-          <CardBody className="flex flex-col text-center items-center col-span-2 lg:col-span-1">
+        <Card className="col-span-2 lg:col-span-1">
+          <CardBody className="flex flex-col text-center items-center">
             <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/money.png')} />
             <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Your {numberWithCommas(holdings)} TIKI Earns:</p><br/>
             <div className="flex">
@@ -146,21 +146,21 @@ function Dashboard(props) {
             <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on $5m trading volume</p>
           </CardBody>
         </Card>
-        <Card>
-          <CardBody className="flex flex-col text-center items-center col-span-2 lg:col-span-1">
+        <Card className="col-span-2 lg:col-span-1">
+          <CardBody className="flex flex-col text-center items-center">
             <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/money.png')} />
             <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">By Reinvesting Dividends Every Day, Your {numberWithCommas(holdings)} TIKI Becomes:</p><br/>
             <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas(compoundedTikiAfterNDays(holdings, 7))} TIKI</span> ({(compoundedTikiAfterNDays(holdings, 7)/holdings).toFixed(2)}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In a Week</span>
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 7)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 7)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In a Week</span>
             </div>
             <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas(compoundedTikiAfterNDays(holdings, 30))} TIKI</span> ({(compoundedTikiAfterNDays(holdings, 30)/holdings).toFixed(2)}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In a Month</span>
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 30)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 30)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In a Month</span>
             </div>
             <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas(compoundedTikiAfterNDays(holdings, 60))} TIKI</span> ({(compoundedTikiAfterNDays(holdings, 60)/holdings).toFixed(2)}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 2 Months</span>
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 60)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 60)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 2 Months</span>
             </div>
             <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas(compoundedTikiAfterNDays(holdings, 180))} TIKI</span> ({(compoundedTikiAfterNDays(holdings, 180)/holdings).toFixed(2)}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 6 Months</span>
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 180)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 180)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 6 Months</span>
             </div>
             <br/>
             <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on current $TIKI price</p>
