@@ -117,7 +117,9 @@ function Dashboard(props) {
 
       </div>
       {nextPayoutValue != 0 ?
-      <Button className="w-full h-full mt-4 text-lg font-semibold text-gray-700 dark:text-gray-200"
+        <Card className="mt-4">
+          <CardBody className="flex items-center">
+      <Button className="w-full h-full text-lg font-semibold text-gray-700 dark:text-gray-200"
           onClick={() => {
             if (wallet !== null && tikiContract !== null) {
               const encodedABI = tikiContract.interface.encodeFunctionData( 'claim', [])
@@ -145,6 +147,7 @@ function Dashboard(props) {
               })
             }
           }}>{wallet !== null ? claimed ? 'PAYOUT CLAIMED!' : 'CLAIM PAYOUT' : 'Optional - Connect Wallet And Claim Manually NOW'}</Button>
+          </CardBody></Card>
           : null }
       {/* <Button className="w-full h-full mt-4 mb-4" onClick={
         () => {
