@@ -20,6 +20,10 @@ import numberWithCommas from '../utils/numberWithCommas'
 
 function Dashboard(props) {
 
+  const [reinvestContract, setReinvestContract] = useState(null)
+  const [tikiContract, setTikiContract] = useState(null)
+  const [claimed, setClaimed] = useState(false)
+
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
 
@@ -38,7 +42,7 @@ function Dashboard(props) {
   const resultsPerPage = 0
   const totalResults = response.length
 
-  const { tikiPrice, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
+  const { tikiPrice, wallet, setWallet, getWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
   
   const payoutText = <><span className="text-yellow-300">{nextPayoutValue != 0 ? nextPayoutValue + ' BNB' : 'Processing'}</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
 
@@ -52,6 +56,7 @@ function Dashboard(props) {
     }
     return accumulatedTiki.toFixed(0)
   }
+
   return (
     <div className="pb-10">
 
@@ -109,15 +114,77 @@ function Dashboard(props) {
             </div>
           </CardBody>
         </Card>
+
       </div>
 
-      <a  className="w-full h-full" href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x9b76D1B12Ff738c113200EB043350022EBf12Ff0" target="_blank" rel="noopener noreferrer">
-        <Button className="w-full mt-4 mb-4" style={{background: 'lime !important'}} iconLeft={HeartIcon}>
-            Click Here To Reinvest Your Dividends And Earn Even More BNB Over Time
-        </Button>
-      </a>
+      <Button className="w-full h-full mt-4 text-lg font-semibold text-gray-700 dark:text-gray-200"
+          onClick={() => {
+            if (wallet !== null && tikiContract !== null) {
+              const encodedABI = tikiContract.interface.encodeFunctionData( 'claim', [])
+              wallet.getTransactionCount().then(nonce => {
+                const tx = {
+                  chainId: 56,
+                  nonce: ethers.utils.hexlify(nonce),
+                  gasPrice: ethers.utils.hexlify(7*1000000000),
+                  gasLimit: ethers.utils.hexlify(250000),
+                  to: tikiContract.address,
+                  value: ethers.utils.parseEther('0'),
+                  data: encodedABI
+                }
+  
+                wallet.sendTransaction(tx).then(confirmation => {
+                  setClaimed(true)
+                })
+              })
+            } else {
+              getWallet().then(wallet => {
+                setWallet(wallet[0])
+                setAddress(wallet[1])
+                setReinvestContract(wallet[2])
+                setTikiContract(wallet[3])
+              })
+            }
+          }}>{wallet !== null ? claimed ? 'PAYOUT CLAIMED!' : 'CLAIM PAYOUT' : 'Optional - Connect Wallet And Claim Manually NOW'}</Button>
+      {/* <Button className="w-full h-full mt-4 mb-4" onClick={
+        () => {
+          if (wallet !== null && reinvestContract !== null) {
+            if (tikiPrice == 0) return
+            const amountToInvest = '0.01'
+            const tokensOut = ((Number(amountToInvest)*bnbPrice)/tikiPrice)*1e18
 
-      <div className="grid grid-cols-2 gap-4">
+            const encodedABI = reinvestContract.interface.encodeFunctionData( 'swapETHForExactTokens', [tokensOut.toFixed(0), Date.now()+300000])
+
+            wallet.getTransactionCount().then(nonce => {
+              const tx = {
+                chainId: 56,
+                nonce: ethers.utils.hexlify(nonce),
+                gasPrice: ethers.utils.hexlify(7*1000000000),
+                gasLimit: ethers.utils.hexlify(1500000),
+                to: reinvestContract.address,
+                value: ethers.utils.parseEther(amountToInvest),
+                data: encodedABI
+              }
+
+              wallet.sendTransaction(tx).then(confirmation => {
+                console.log(`Bought from ${confirmation.from}`)
+              })
+
+            })
+          } else {
+            getWallet().then(wallet => {
+              setWallet(wallet[0])
+              setAddress(wallet[1])
+              setReinvestContract(wallet[2])
+            })
+          }
+        }
+      }>
+        <span className="w-full">
+            {wallet !== null ? "WALLET CONNECTED - Click To Reinvest Your Dividends With ZERO Tax!" : "CLICK TO CONNECT YOUR WALLET - Reinvest Your Dividends With ZERO Tax!"}
+        </span>
+      </Button> */}
+
+      <div className="grid grid-cols-2 gap-4 mt-4">
 
         <Card className="col-span-2">
           <CardBody className="flex flex-col text-center items-center">
