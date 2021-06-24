@@ -116,7 +116,7 @@ function Dashboard(props) {
         </Card>
 
       </div>
-
+      {nextPayoutValue != 0 ?
       <Button className="w-full h-full mt-4 text-lg font-semibold text-gray-700 dark:text-gray-200"
           onClick={() => {
             if (wallet !== null && tikiContract !== null) {
@@ -145,6 +145,7 @@ function Dashboard(props) {
               })
             }
           }}>{wallet !== null ? claimed ? 'PAYOUT CLAIMED!' : 'CLAIM PAYOUT' : 'Optional - Connect Wallet And Claim Manually NOW'}</Button>
+          : null }
       {/* <Button className="w-full h-full mt-4 mb-4" onClick={
         () => {
           if (wallet !== null && reinvestContract !== null) {
