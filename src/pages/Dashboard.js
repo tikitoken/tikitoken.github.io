@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { ethers } from 'ethers'
+
 import CTA from '../components/CTA'
 import InfoCard from '../components/Cards/InfoCard'
 import PageTitle from '../components/Typography/PageTitle'
@@ -38,7 +40,7 @@ function Dashboard(props) {
 
   const { tikiPrice, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
   
-  const payoutText = <><span className="text-yellow-300">{nextPayoutValue} BNB</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
+  const payoutText = <><span className="text-yellow-300">{nextPayoutValue != 0 ? nextPayoutValue + ' BNB' : 'Processing'}</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
 
   const earningsInDollars = (holdings/1000000000)*550000
   const earningsInBnb = earningsInDollars/bnbPrice
@@ -50,13 +52,12 @@ function Dashboard(props) {
     }
     return accumulatedTiki.toFixed(0)
   }
-
   return (
     <div className="pb-10">
 
       <PageTitle className="text-3xl">TIKI Earnings Manager</PageTitle>
 
-      <CTA holdings={holdings} address={(address !== "" && bnbHoldings !== 0) ? `${address} | BNB In Your Wallet: ${bnbHoldings} ($${numberWithCommas((bnbHoldings*bnbPrice).toFixed(2))})` : address} />
+      <CTA holdings={holdings} text={(address !== "" && ethers.utils.isAddress(address) && bnbHoldings !== 0) ? `${address} | BNB In Your Wallet: ${bnbHoldings} ($${numberWithCommas((bnbHoldings*bnbPrice).toFixed(2))})` : address} />
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         <InfoCard title="Your TIKI Holdings" value={`${numberWithCommas(holdings)} TIKI`}>
