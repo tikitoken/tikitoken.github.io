@@ -5,15 +5,9 @@ import { ethers } from 'ethers'
 import CTA from '../components/CTA'
 import InfoCard from '../components/Cards/InfoCard'
 import PageTitle from '../components/Typography/PageTitle'
-import { CartIcon, MoneyIcon, PeopleIcon, HeartIcon, CoinsIcon } from '../icons'
 import RoundIcon from '../components/RoundIcon'
-import response from '../utils/demo/tableData'
-import {
-  Card,
-  CardBody,
-  Button,
-  Modal, ModalHeader, ModalBody, ModalFooter
-} from '@windmill/react-ui'
+import { CartIcon, MoneyIcon, PeopleIcon, HeartIcon, CoinsIcon } from '../icons'
+import { Card, CardBody, Button } from '@windmill/react-ui'
 
 import TimeDifference from '../utils/timeDifference'
 import numberWithCommas from '../utils/numberWithCommas'
@@ -22,25 +16,11 @@ function Dashboard(props) {
 
   const [reinvestContract, setReinvestContract] = useState(null)
   const [tikiContract, setTikiContract] = useState(null)
+  const [reinvested, setReinvested] = useState(false)
   const [claimed, setClaimed] = useState(false)
+  const [reinvestAmount, setReinvestAmount] = useState(1)
 
-  const [page, setPage] = useState(1)
-  const [data, setData] = useState([])
-
-  // pagination change control
-  function onPageChange(p) {
-    setPage(p)
-  }
-
-  // on page change, load new sliced data
-  // here you would make another server request for new data
-  useEffect(() => {
-    setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage))
-  }, [page])
-
-  // pagination setup
-  const resultsPerPage = 0
-  const totalResults = response.length
+  const reinvestInput = <><span>Reinvest </span><input onClick={e => e.stopPropagation()} type="text" className="w-1/3 text-black text-center" value={reinvestAmount} onChange={e => setReinvestAmount(isNaN(e.target.value) ? reinvestAmount : e.target.value)} /><span> BNB (click here to confirm)</span></>
 
   const { tikiPrice, wallet, setWallet, getWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
   
@@ -116,77 +96,79 @@ function Dashboard(props) {
         </Card>
 
       </div>
-      {nextPayoutValue != 0 ?
         <Card className="mt-4">
           <CardBody className="flex items-center">
-      <Button className="w-full h-full text-lg font-semibold text-gray-700 dark:text-gray-200"
-          onClick={() => {
-            if (wallet !== null && tikiContract !== null) {
-              const encodedABI = tikiContract.interface.encodeFunctionData( 'claim', [])
-              wallet.getTransactionCount().then(nonce => {
-                const tx = {
-                  chainId: 56,
-                  nonce: ethers.utils.hexlify(nonce),
-                  gasPrice: ethers.utils.hexlify(7*1000000000),
-                  gasLimit: ethers.utils.hexlify(250000),
-                  to: tikiContract.address,
-                  value: ethers.utils.parseEther('0'),
-                  data: encodedABI
+            <Button disabled={nextPayoutValue == 0 ? true : false} className={`w-1/2 h-full text-lg font-semibold`}
+                onClick={() => {
+                if (wallet !== null && tikiContract !== null) {
+                  const encodedABI = tikiContract.interface.encodeFunctionData( 'claim', [])
+                  wallet.getTransactionCount().then(nonce => {
+                    const tx = {
+                      chainId: 56,
+                      nonce: ethers.utils.hexlify(nonce),
+                      gasPrice: ethers.utils.hexlify(7*1000000000),
+                      gasLimit: ethers.utils.hexlify(250000),
+                      to: tikiContract.address,
+                      value: ethers.utils.parseEther('0'),
+                      data: encodedABI
+                    }
+      
+                    wallet.sendTransaction(tx).then(confirmation => {
+                      setClaimed(true)
+                    })
+                  })
+                } else {
+                  getWallet().then(wallet => {
+                    setWallet(wallet[0])
+                    setAddress(wallet[1])
+                    setReinvestContract(wallet[2])
+                    setTikiContract(wallet[3])
+                  })
                 }
-  
-                wallet.sendTransaction(tx).then(confirmation => {
-                  setClaimed(true)
+              }}>{nextPayoutValue == 0 ? 'Payout Is Processing' : wallet !== null ? claimed ? 'Payout Claimed!' : 'Claim Payout' : 'Optional - Connect Wallet And Claim Manually NOW'}</Button>
+          
+          <Button disabled={tikiPrice === null} className="ml-4 w-1/2 h-full text-lg font-semibold" onClick={
+            () => {
+              if (wallet !== null && reinvestContract !== null) {
+                if (tikiPrice == 0) return
+                const tokensOut = (((Number(reinvestAmount)*bnbPrice)/tikiPrice)*0.94)
+
+                const encodedABI = reinvestContract.interface.encodeFunctionData( 'swapETHForExactTokens', [ethers.utils.parseEther(tokensOut.toFixed(0)), Date.now()+300000])
+
+                wallet.getTransactionCount().then(nonce => {
+                  const tx = {
+                    chainId: 56,
+                    nonce: ethers.utils.hexlify(nonce),
+                    gasPrice: ethers.utils.hexlify(5*1000000000),
+                    gasLimit: ethers.utils.hexlify(1500000),
+                    to: reinvestContract.address,
+                    value: ethers.utils.parseEther(reinvestAmount),
+                    data: encodedABI
+                  }
+
+                  wallet.sendTransaction(tx).then(confirmation => {
+                    setReinvested(true)
+                  })
+
                 })
-              })
-            } else {
-              getWallet().then(wallet => {
-                setWallet(wallet[0])
-                setAddress(wallet[1])
-                setReinvestContract(wallet[2])
-                setTikiContract(wallet[3])
-              })
-            }
-          }}>{wallet !== null ? claimed ? 'PAYOUT CLAIMED!' : 'CLAIM PAYOUT' : 'Optional - Connect Wallet And Claim Manually NOW'}</Button>
-          </CardBody></Card>
-          : null }
-      {/* <Button className="w-full h-full mt-4 mb-4" onClick={
-        () => {
-          if (wallet !== null && reinvestContract !== null) {
-            if (tikiPrice == 0) return
-            const amountToInvest = '0.01'
-            const tokensOut = ((Number(amountToInvest)*bnbPrice)/tikiPrice)*1e18
-
-            const encodedABI = reinvestContract.interface.encodeFunctionData( 'swapETHForExactTokens', [tokensOut.toFixed(0), Date.now()+300000])
-
-            wallet.getTransactionCount().then(nonce => {
-              const tx = {
-                chainId: 56,
-                nonce: ethers.utils.hexlify(nonce),
-                gasPrice: ethers.utils.hexlify(7*1000000000),
-                gasLimit: ethers.utils.hexlify(1500000),
-                to: reinvestContract.address,
-                value: ethers.utils.parseEther(amountToInvest),
-                data: encodedABI
+              } else {
+                getWallet().then(wallet => {
+                  setWallet(wallet[0])
+                  setAddress(wallet[1])
+                  setReinvestContract(wallet[2])
+                  setTikiContract(wallet[3])
+                })
               }
-
-              wallet.sendTransaction(tx).then(confirmation => {
-                console.log(`Bought from ${confirmation.from}`)
-              })
-
-            })
-          } else {
-            getWallet().then(wallet => {
-              setWallet(wallet[0])
-              setAddress(wallet[1])
-              setReinvestContract(wallet[2])
-            })
-          }
-        }
-      }>
-        <span className="w-full">
-            {wallet !== null ? "WALLET CONNECTED - Click To Reinvest Your Dividends With ZERO Tax!" : "CLICK TO CONNECT YOUR WALLET - Reinvest Your Dividends With ZERO Tax!"}
-        </span>
-      </Button> */}
+            }}>
+              <span className="w-full">
+                  {wallet !== null ? reinvested ? `Reinvested ${reinvestAmount} BNB at Only 5% Buy Tax!` : reinvestInput : "Connect and Reinvest With ONLY 5% Buy Tax!"}
+              </span>
+          </Button>
+          
+          </CardBody>
+        </Card>
+        
+      
 
       <div className="grid grid-cols-2 gap-4 mt-4">
 

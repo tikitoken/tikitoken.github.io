@@ -11,20 +11,15 @@ const routes = [
     icon: 'HomeIcon', // the component being exported from icons/index.js
     name: 'Dashboard', // name that appear in Sidebar
   },
+  {
+    path: '/recovery',
+    icon: 'CardsIcon',
+    name: 'Recovery',
+  },
   // {
   //   path: '/tikituesday',
   //   icon: 'TablesIcon',
   //   name: 'Tiki Tuesday',
-  // },
-  {
-    path: '/recovery',
-    icon: 'CardsIcon',
-    name: 'Cards',
-  },
-  // {
-  //   path: '/recovery',
-  //   icon: 'MoneyIcon',
-  //   name: 'Presale & Recovery',
   // },
 ]
 

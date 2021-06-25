@@ -10,11 +10,6 @@ import ThemedSuspense from './components/ThemedSuspense'
 
 import './assets/css/tailwind.output.css'
 
-// if (process.env.NODE_ENV !== 'production') {
-//   const axe = require('react-axe')
-//   axe(React, ReactDOM, 1000)
-// }
-
 ReactDOM.render(
   <SidebarProvider>
     <Suspense fallback={<ThemedSuspense />}>

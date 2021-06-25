@@ -2,10 +2,10 @@ import React, { useState, lazy, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { ethers } from 'ethers'
 
-import {
-  Button,
-  Modal, ModalHeader, ModalBody, ModalFooter
-} from '@windmill/react-ui'
+// import {
+//   Button,
+//   Modal, ModalHeader, ModalBody, ModalFooter
+// } from '@windmill/react-ui'
 
 import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer'
 const Layout = lazy(() => import('./containers/Layout'))
@@ -124,10 +124,11 @@ function App() {
   useEffect(() => {
     fetch('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=USD&include_market_cap=false&include_24hr_vol=false&include_24hr_change=false&include_last_updated_at=false').then(response => {
       response.json().then(priceJson => {
-        // getTikiPrice().then(price => {
+        getTikiPrice().then(price => {
           setBnbPrice(priceJson.binancecoin.usd)
-          setTikiPrice(0.025)
-        // })
+          setTikiPrice(price)
+        })
+        // FOR TIKI TUESDAY:
         // provider.getBlockNumber().then(currBlock => {
         //   getChunksAndMergeThenReturnHighest(42/3, currBlock, 3).then(highest => {
         //     setHighestBuyers(highest.reverse())
@@ -151,6 +152,8 @@ function App() {
     })
   }, [refreshTimeData])
 
+  // getAccountDividendsInfo returns []:
+  // address Address
   // int256 index,
   // int256 iterationsUntilProcessed,
   // uint256 withdrawableDividends,
@@ -177,13 +180,6 @@ function App() {
         })
       })
     }
-    // tikiContract.getAccountDividendsInfo(address).then((result) =>{
-    //   console.log(result)
-    //   const getTotalClaimed = trackerContract.withdrawnDividendOf(address).then((result) =>{
-    //     setDividends(parseInt(result._hex, 16))
-    //     setTimeout(function(){ setRefreshAddressData(!refreshAddressData) }, 9000);
-    //   })
-    // })
 
   return (
     <>
