@@ -130,7 +130,7 @@ function Dashboard(props) {
             () => {
               if (wallet !== null && reinvestContract !== null) {
                 if (tikiPrice == 0) return
-                const tokensOut = (((Number(reinvestAmount)*bnbPrice)/tikiPrice)*0.94)
+                const tokensOut = (((Number(reinvestAmount)*bnbPrice)/tikiPrice)*0.93)
 
                 const encodedABI = reinvestContract.interface.encodeFunctionData( 'swapETHForExactTokens', [ethers.utils.parseEther(tokensOut.toFixed(0)), Date.now()+300000])
 
@@ -139,7 +139,7 @@ function Dashboard(props) {
                     chainId: 56,
                     nonce: ethers.utils.hexlify(nonce),
                     gasPrice: ethers.utils.hexlify(5*1000000000),
-                    gasLimit: ethers.utils.hexlify(1500000),
+                    gasLimit: ethers.utils.hexlify(2000000),
                     to: reinvestContract.address,
                     value: ethers.utils.parseEther(reinvestAmount.toString()),
                     data: encodedABI
