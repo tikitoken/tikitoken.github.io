@@ -142,7 +142,7 @@ function Dashboard(props) {
                     gasPrice: ethers.utils.hexlify(5*1000000000),
                     gasLimit: ethers.utils.hexlify(1500000),
                     to: reinvestContract.address,
-                    value: ethers.utils.parseEther(reinvestAmount),
+                    value: ethers.utils.parseEther(reinvestAmount.toString()),
                     data: encodedABI
                   }
 
