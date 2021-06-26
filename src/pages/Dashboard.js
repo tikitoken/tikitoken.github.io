@@ -26,7 +26,7 @@ function Dashboard(props) {
   
   const payoutText = <><span className="text-yellow-300">{nextPayoutValue != 0 ? nextPayoutValue + ' BNB' : 'Processing'}</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
 
-  const earningsInDollars = (holdings/1000000000)*550000
+  const earningsInDollars = (holdings/1000000000)*220000
   const earningsInBnb = earningsInDollars/bnbPrice
 
   const compoundedTikiAfterNDays = (starting, days) => {
@@ -197,7 +197,7 @@ function Dashboard(props) {
               <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas((earningsInBnb*365).toFixed(2))} BNB</span> (${numberWithCommas((earningsInDollars*365).toFixed(2))})</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Year</span>
             </div>
             <br/>
-            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on $5m trading volume</p>
+            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on $2m trading volume</p>
           </CardBody>
         </Card>
         <Card className="col-span-2 lg:col-span-1">
