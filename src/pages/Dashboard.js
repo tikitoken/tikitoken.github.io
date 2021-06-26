@@ -14,15 +14,16 @@ import numberWithCommas from '../utils/numberWithCommas'
 
 function Dashboard(props) {
 
+  const { tikiPrice, wallet, setWallet, getWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
+
   const [reinvestContract, setReinvestContract] = useState(null)
   const [tikiContract, setTikiContract] = useState(null)
   const [reinvested, setReinvested] = useState(false)
   const [claimed, setClaimed] = useState(false)
-  const [reinvestAmount, setReinvestAmount] = useState(1)
+  const [reinvestAmount, setReinvestAmount] = useState({paid})
 
   const reinvestInput = <><span>Reinvest </span><input onClick={e => e.stopPropagation()} type="text" className="w-1/3 text-black text-center" value={reinvestAmount} onChange={e => setReinvestAmount(isNaN(e.target.value) ? reinvestAmount : e.target.value)} /><span> BNB (click here to confirm)</span></>
 
-  const { tikiPrice, wallet, setWallet, getWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
   
   const payoutText = <><span className="text-yellow-300">{nextPayoutValue != 0 ? nextPayoutValue + ' BNB' : 'Processing'}</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
 
