@@ -32,7 +32,7 @@ function Dashboard(props) {
   const compoundedTikiAfterNDays = (starting, days) => {
     let accumulatedTiki = Number(starting)
     for (let i = 0; i < days; i++) {
-      accumulatedTiki = accumulatedTiki + (((accumulatedTiki/1000000000)*550000)/tikiPrice)
+      accumulatedTiki = accumulatedTiki + (((accumulatedTiki/1000000000)*220000)/tikiPrice)
     }
     return accumulatedTiki.toFixed(0)
   }
