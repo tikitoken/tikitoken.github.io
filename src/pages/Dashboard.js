@@ -125,9 +125,9 @@ function Dashboard(props) {
                     setTikiContract(wallet[3])
                   })
                 }
-              }}>{nextPayoutValue == 0 ? 'Payout Is Processing' : wallet !== null ? claimed ? 'Payout Claimed!' : 'Claim Payout' : 'Optional - Connect Wallet And Claim Manually NOW'}</Button>
+              }}>{nextPayoutValue == 0 ? 'Payout Is Processing' : wallet !== null ? claimed ? 'Payout Claimed!' : 'Claim Payout' : 'Optional - Connect Wallet and Claim Manually NOW'}</Button>
           
-          <Button disabled={(tikiPrice === null) || (holdings == 0) || reinvested} className="ml-4 w-1/2 h-full text-lg font-semibold" onClick={
+          <Button disabled={(tikiPrice === null) || (holdings == 0) || reinvested} className="ml-4 w-1/2 h-full text-lg font-bold" style={{backgroundColor: '#239470', boxShadow: '0px 0px 20px #057a55'}} onClick={
             () => {
               if (wallet !== null && reinvestContract !== null) {
                 if (tikiPrice == 0) return
@@ -160,7 +160,7 @@ function Dashboard(props) {
                 })
               }
             }}>
-              <span className="w-full">
+              <span className="w-full" style={{textShadow: '1px 1px 1px black'}}>
                   {holdings == 0 ? "You Do Not Own Enough TIKI To Reinvest" : wallet !== null ? reinvested ? `Reinvested ${reinvestAmount} BNB at Only 5% Buy Tax!` : reinvestInput : "Connect and Reinvest With ONLY 5% Buy Tax!"}
               </span>
           </Button>
