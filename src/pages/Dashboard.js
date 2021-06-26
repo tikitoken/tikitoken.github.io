@@ -20,7 +20,7 @@ function Dashboard(props) {
   const [tikiContract, setTikiContract] = useState(null)
   const [reinvested, setReinvested] = useState(false)
   const [claimed, setClaimed] = useState(false)
-  const [reinvestAmount, setReinvestAmount] = useState(paid)
+  const [reinvestAmount, setReinvestAmount] = useState((paid/1e18).toFixed(4))
 
   const reinvestInput = <><span>Reinvest </span><input onClick={e => e.stopPropagation()} type="text" className="w-1/3 text-black text-center" value={reinvestAmount} onChange={e => setReinvestAmount(isNaN(e.target.value) ? reinvestAmount : e.target.value)} /><span> BNB (click here to confirm)</span></>
   const payoutText = <><span className="text-yellow-300">{nextPayoutValue != 0 ? nextPayoutValue + ' BNB' : 'Processing'}</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
