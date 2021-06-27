@@ -1,10 +1,12 @@
 import React from 'react'
 import DailyTaskCard from './DailyTaskCard'
 
-const GoogleCard = () => (
+const GoogleCard = ({ taskCompleted, setTaskCompleted }) => (
   <DailyTaskCard
     title="Google"
     logo={require('../../../assets/img/logo_google.svg')}
+    taskCompleted={taskCompleted}
+    setTaskCompleted={setTaskCompleted}
   >
     <p className="mb-4 text text-gray-600 dark:text-gray-300">
       Searching for these terms on Google increases their ranking, causing more

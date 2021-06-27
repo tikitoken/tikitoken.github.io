@@ -1,10 +1,12 @@
 import React from 'react'
 import DailyTaskCard from './DailyTaskCard'
 
-const CoinGeckoCard = () => (
+const CoinGeckoCard = ({ taskCompleted, setTaskCompleted }) => (
   <DailyTaskCard
     title="CoinGecko"
     logo={require('../../../assets/img/logo_coingecko.png')}
+    taskCompleted={taskCompleted}
+    setTaskCompleted={setTaskCompleted}
   >
     <p className="mb-4 text text-gray-600 dark:text-gray-300">
       Go to TIKI's CoinGecko page and let them know how amazing you think TIKI
