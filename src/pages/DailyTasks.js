@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PageTitle from '../components/Typography/PageTitle'
-import { Card, CardBody } from '@windmill/react-ui'
+import GoogleCard from '../components/Cards/DailyTasks/GoogleCard'
+import YouTubeCard from '../components/Cards/DailyTasks/YouTubeCard'
+import TwitterCard from '../components/Cards/DailyTasks/TwitterCard'
+import CoinGeckoCard from '../components/Cards/DailyTasks/CoinGeckoCard'
+import InstagramCard from '../components/Cards/DailyTasks/InstagramCard'
 
 function DailyTasks() {
   return (
@@ -13,12 +17,12 @@ function DailyTasks() {
         As such, investors are highly encouraged to perform these tasks daily.
       </p>
 
-      <div className="grid gap-6 mb-8 md:grid-cols-2">
-        <Card>
-          <CardBody>
-            <p className="mb-4 text-3xl font-semibold text-gray-600 dark:text-gray-300"></p>
-          </CardBody>
-        </Card>
+      <div className="grid gap-6 mb-8 md:grid-cols-1 lg:grid-cols-2">
+        <GoogleCard />
+        <YouTubeCard />
+        <TwitterCard />
+        <CoinGeckoCard />
+        <InstagramCard />
       </div>
     </>
   )
