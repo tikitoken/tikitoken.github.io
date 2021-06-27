@@ -16,6 +16,11 @@ const routes = [
     icon: 'CardsIcon',
     name: 'Recovery',
   },
+  {
+    path: '/daily-tasks',
+    icon: 'BellIcon',
+    name: 'Daily tasks',
+  },
   // {
   //   path: '/tikituesday',
   //   icon: 'TablesIcon',
