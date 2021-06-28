@@ -210,10 +210,10 @@ function Dashboard(props) {
               <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 30)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 30)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In a Month</span>
             </div>
             <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 182)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 60)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 6 Months</span>
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 182)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 182)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 6 Months</span>
             </div>
             <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 365)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 180)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 1 Year</span>
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 365)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 365)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 1 Year</span>
             </div>
             <br/>
             <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on current $TIKI price (${tikiPrice.toFixed(4)})</p>
