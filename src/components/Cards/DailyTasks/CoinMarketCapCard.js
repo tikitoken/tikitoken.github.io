@@ -9,7 +9,12 @@ const CoinMarketCapCard = ({ taskCompleted, setTaskCompleted }) => (
     setTaskCompleted={setTaskCompleted}
   >
     <p className="mb-4 text text-gray-600 dark:text-gray-300">
-      Go to TIKI's CoinMarketCap page and click on the STAR to ADD TIKI to your watchlist!
+      We are listed on CMC! 
+      To help get more exposure and enhance market value:
+      <br/>
+      <br/>✅Use <a href="https://keeprefreshing.com" target="_blank" rel="noopener noreferrer">keeprefreshing.com</a> and set timer to 10 seconds. Open as many tabs as you can.
+      <br/>✅Add Tiki Token to watchlist, and tell your friends to do the same.
+      <br/>✅Vote 'Good' at the bottom of the page.
     </p>
 
     <div className="mb-4">
