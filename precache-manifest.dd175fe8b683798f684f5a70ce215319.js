@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6337aed7a49d348f2c7fc5b830dfa7ae",
+    "revision": "476f19a66e75f0fbeac99f5843d7dd73",
     "url": "/index.html"
   },
   {
-    "revision": "e02f75fb221f292cd7fa",
-    "url": "/static/css/main.fa19ac4a.chunk.css"
+    "revision": "a186d7f14afa4d2ea0ae",
+    "url": "/static/css/main.4d1df2c2.chunk.css"
   },
   {
     "revision": "d00e63dd607a92969855",
@@ -16,32 +16,36 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/2.ea114231.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "2d6f872a29dd1275c7ca",
-    "url": "/static/js/3.bc8ef2ad.chunk.js"
+    "revision": "c096cad82c40eb34f3f8",
+    "url": "/static/js/3.8c45b9d1.chunk.js"
+  },
+  {
+    "revision": "f44d9d1619d81c989125",
+    "url": "/static/js/4.c4bd1ce5.chunk.js"
   },
   {
     "revision": "81896c98bac7b5b16ab1d3790da5b937",
-    "url": "/static/js/3.bc8ef2ad.chunk.js.LICENSE.txt"
+    "url": "/static/js/4.c4bd1ce5.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "2353ea997f00c4a46296",
-    "url": "/static/js/4.898df981.chunk.js"
+    "revision": "03c1aee28a10d4424d21",
+    "url": "/static/js/5.e29cc8f6.chunk.js"
   },
   {
-    "revision": "65681a3f42d310fc56dc",
-    "url": "/static/js/5.7f7b0f3a.chunk.js"
+    "revision": "146a57a6bc1d464f8569",
+    "url": "/static/js/6.8a838920.chunk.js"
   },
   {
-    "revision": "6ee97d0cb967c7f71cef",
-    "url": "/static/js/6.abd97bfd.chunk.js"
+    "revision": "76146296c410cb2b4a08",
+    "url": "/static/js/7.a6568399.chunk.js"
   },
   {
-    "revision": "e02f75fb221f292cd7fa",
-    "url": "/static/js/main.1c7f3fa0.chunk.js"
+    "revision": "a186d7f14afa4d2ea0ae",
+    "url": "/static/js/main.2981487d.chunk.js"
   },
   {
-    "revision": "8681e3eddedcf11a30c0",
-    "url": "/static/js/runtime-main.f297dcc2.js"
+    "revision": "c9b47133aaae89d64be6",
+    "url": "/static/js/runtime-main.fe193abb.js"
   },
   {
     "revision": "b9c73089fd14dcb97bf597665f575ac1",
@@ -70,6 +74,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "f88a7a4e766a011150d1f19f3828bb51",
     "url": "/static/media/chat.f88a7a4e.svg"
+  },
+  {
+    "revision": "a72a0e25927d4f9aec4d21e201fd00ec",
+    "url": "/static/media/coinmarketcap.a72a0e25.png"
   },
   {
     "revision": "887bc5554eedb8964a371ea15df39456",
@@ -102,6 +110,26 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "0717747219593ac12c6f355006f97943",
     "url": "/static/media/home.07177472.svg"
+  },
+  {
+    "revision": "30d53b9cc9a89ae937c5cd92d89c34f1",
+    "url": "/static/media/logo_coingecko.30d53b9c.png"
+  },
+  {
+    "revision": "b7727941c0e8a117b6cfd8f06a1cb7ed",
+    "url": "/static/media/logo_google.b7727941.svg"
+  },
+  {
+    "revision": "3c451c27d33cbbaf8401aa796bcd7ec5",
+    "url": "/static/media/logo_instagram.3c451c27.svg"
+  },
+  {
+    "revision": "6664996445245a30d5ce3bb4168ffb8f",
+    "url": "/static/media/logo_twitter.66649964.svg"
+  },
+  {
+    "revision": "46bc69048b59bb79de5e78c84cdf683a",
+    "url": "/static/media/logo_youtube.46bc6904.svg"
   },
   {
     "revision": "e8edbe5b89f1a31eb88a2ff2d3cb34eb",
