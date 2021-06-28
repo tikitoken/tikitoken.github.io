@@ -6,6 +6,7 @@ import TwitterCard from '../components/Cards/DailyTasks/TwitterCard'
 import CoinGeckoCard from '../components/Cards/DailyTasks/CoinGeckoCard'
 import InstagramCard from '../components/Cards/DailyTasks/InstagramCard'
 import { Card, CardBody } from '@windmill/react-ui'
+import CoinMarketCapCard from '../components/Cards/DailyTasks/CoinMarketCapCard'
 
 function DailyTasks() {
   const [completedTasks, setCompletedTasks] = useState({
@@ -14,6 +15,7 @@ function DailyTasks() {
     twitter: false,
     coingecko: false,
     instagram: false,
+    coinmarketcap: false,
   })
 
   const completedTasksAmt = Object.values(completedTasks).filter(
@@ -22,12 +24,12 @@ function DailyTasks() {
 
   return (
     <>
-      <PageTitle className={'mb-0'}>Daily tasks to boost your income</PageTitle>
+      <PageTitle className={'mb-0'}>Tasks to boost your income</PageTitle>
       <p className={'mt-0 mb-6 dark:text-gray-300'}>
         The tasks outlined below can significantly impact the (future) value of
         your investment.
         <br />
-        As such, investors are highly encouraged to perform these tasks daily.
+        As such, investors are highly encouraged to perform these tasks as often as possible.
       </p>
 
       {completedTasksAmt > 0 && (
@@ -42,6 +44,24 @@ function DailyTasks() {
       )}
 
       <div className="grid gap-6 mb-8 md:grid-cols-1 lg:grid-cols-2">
+        <CoinMarketCapCard
+          taskCompleted={completedTasks['coinmarketcap']}
+          setTaskCompleted={(completed) =>
+            setCompletedTasks((prev) => ({
+              ...prev,
+              coinmarketcap: completed,
+            }))
+          }
+        />
+        <CoinGeckoCard
+            taskCompleted={completedTasks['coingecko']}
+            setTaskCompleted={(completed) =>
+              setCompletedTasks((prev) => ({
+                ...prev,
+                coingecko: completed,
+              }))
+            }
+          />
         <GoogleCard
           taskCompleted={completedTasks['google']}
           setTaskCompleted={(completed) =>
@@ -60,17 +80,8 @@ function DailyTasks() {
             setCompletedTasks((prev) => ({ ...prev, twitter: completed }))
           }
         />
-        <CoinGeckoCard
-          taskCompleted={completedTasks['coingecko']}
-          setTaskCompleted={(completed) =>
-            setCompletedTasks((prev) => ({
-              ...prev,
-              coingecko: completed,
-            }))
-          }
-        />
         <InstagramCard
-          taskCompleted={completedTasks['google']}
+          taskCompleted={completedTasks['instagram']}
           setTaskCompleted={(completed) =>
             setCompletedTasks((prev) => ({ ...prev, google: completed }))
           }

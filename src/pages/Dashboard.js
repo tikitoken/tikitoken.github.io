@@ -97,7 +97,7 @@ function Dashboard(props) {
       </div>
         <Card className="mt-4">
           <CardBody className="flex items-center">
-            <Button disabled={nextPayoutValue == 0 ? true : false} className={`w-1/2 h-full text-lg font-semibold`}
+            <Button disabled={nextPayoutValue == 0 ? true : false} className={`w-full h-full text-lg font-semibold`}
                 onClick={() => {
                 if (wallet !== null && tikiContract !== null) {
                   const encodedABI = tikiContract.interface.encodeFunctionData( 'claim', [])
@@ -126,7 +126,7 @@ function Dashboard(props) {
                 }
               }}>{nextPayoutValue == 0 ? 'Payout Is Processing' : wallet !== null ? claimed ? 'Payout Claimed!' : 'Claim Payout' : 'Optional - Connect Wallet and Claim Manually NOW'}</Button>
           
-          <Button disabled={(tikiPrice === null) || (holdings == 0) || reinvested} className="ml-4 w-1/2 h-full text-lg font-bold" style={{backgroundColor: '#239470', boxShadow: '0px 0px 20px #057a55'}} onClick={
+          {/* <Button disabled={(tikiPrice === null) || (holdings == 0) || reinvested} className="ml-4 w-1/2 h-full text-lg font-bold" style={{backgroundColor: '#239470', boxShadow: '0px 0px 20px #057a55'}} onClick={
             () => {
               if (wallet !== null && reinvestContract !== null) {
                 if (tikiPrice == 0) return
@@ -162,7 +162,7 @@ function Dashboard(props) {
               <span className="w-full" style={{textShadow: '1px 1px 1px black'}}>
                   {holdings == 0 ? "You Do Not Own Enough TIKI To Reinvest" : wallet !== null ? reinvested ? `Reinvested ${reinvestAmount} BNB at Only 5% Buy Tax!` : reinvestInput : "Connect and Reinvest With ONLY 5% Buy Tax!"}
               </span>
-          </Button>
+          </Button> */}
           
           </CardBody>
         </Card>
@@ -210,10 +210,10 @@ function Dashboard(props) {
               <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 30)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 30)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In a Month</span>
             </div>
             <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 60)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 60)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 2 Months</span>
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 182)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 60)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 6 Months</span>
             </div>
             <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 180)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 180)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 6 Months</span>
+              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 365)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 180)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 1 Year</span>
             </div>
             <br/>
             <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on current $TIKI price</p>

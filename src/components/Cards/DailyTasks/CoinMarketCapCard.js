@@ -1,28 +1,28 @@
 import React from 'react'
 import DailyTaskCard from './DailyTaskCard'
 
-const CoinGeckoCard = ({ taskCompleted, setTaskCompleted }) => (
+const CoinMarketCapCard = ({ taskCompleted, setTaskCompleted }) => (
   <DailyTaskCard
-    title="CoinGecko"
-    logo={require('../../../assets/img/logo_coingecko.png')}
+    title="CoinMarketCap"
+    logo={require('../../../assets/img/coinmarketcap.png')}
     taskCompleted={taskCompleted}
     setTaskCompleted={setTaskCompleted}
   >
     <p className="mb-4 text text-gray-600 dark:text-gray-300">
-      Go to TIKI's CoinGecko page and click on the STAR to LIKE TIKI!
+      Go to TIKI's CoinMarketCap page and click on the STAR to ADD TIKI to your watchlist!
     </p>
 
     <div className="mb-4">
       <a
         className="block text-gray-800 dark:text-gray-200 underline"
-        href="https://www.coingecko.com/en/coins/tiki-token"
+        href="https://coinmarketcap.com/currencies/tiki-token/"
         target="_blank"
         rel="noopener noreferrer"
       >
-        TIKI on CoinGecko
+        TIKI on CoinMarketCap
       </a>
     </div>
   </DailyTaskCard>
 )
 
-export default CoinGeckoCard
+export default CoinMarketCapCard

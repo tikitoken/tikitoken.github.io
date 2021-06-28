@@ -20,9 +20,11 @@ const InstagramCard = ({ taskCompleted, setTaskCompleted }) => (
     <div className="mb-4">
       <a
         className="block text-gray-800 dark:text-gray-200 underline"
-        href="https://google.com"
+        href="https://instagram.com"
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        TIKI on InstaGram
+        Post on Instagram
       </a>
     </div>
   </DailyTaskCard>

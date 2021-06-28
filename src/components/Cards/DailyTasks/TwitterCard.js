@@ -19,7 +19,9 @@ const TwitterCard = ({ taskCompleted, setTaskCompleted }) => (
     <div className="mb-4">
       <a
         className="block text-gray-800 dark:text-gray-200 underline"
-        href="https://google.com"
+        href="https://twitter.com/compose/tweet"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         Compose a new tweet
       </a>

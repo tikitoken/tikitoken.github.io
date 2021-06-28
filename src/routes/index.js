@@ -26,7 +26,7 @@ const routes = [
     component: Recovery,
   },
   {
-    path: '/daily-tasks',
+    path: '/tasks',
     component: DailyTasks
   }
   // {

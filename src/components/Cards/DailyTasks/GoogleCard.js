@@ -17,14 +17,18 @@ const GoogleCard = ({ taskCompleted, setTaskCompleted }) => (
       <a
         className="block text-gray-800 dark:text-gray-200 underline"
         href="https://google.com"
+        target="_blank"
+        rel="noopener noreferrer"
       >
         Search Google for "TIKI Token"
       </a>
       <a
         className="block text-gray-800 dark:text-gray-200 underline"
         href="https://google.com"
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        Search Google for "TIKI auto bnb"
+        Search Google for "TIKI free bnb"
       </a>
     </div>
 

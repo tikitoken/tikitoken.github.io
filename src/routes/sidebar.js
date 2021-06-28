@@ -17,9 +17,9 @@ const routes = [
     name: 'Recovery',
   },
   {
-    path: '/daily-tasks',
+    path: '/tasks',
     icon: 'BellIcon',
-    name: 'Daily tasks',
+    name: 'Grow Your Investment',
   },
   // {
   //   path: '/tikituesday',
