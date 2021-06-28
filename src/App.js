@@ -75,15 +75,22 @@ async function getAmountsOut(quoteAmount, path) {
 async function getTikiPrice() {
   const functionResponse = await getAmountsOut(`${1 * Math.pow(10, tikiDecimals)}`, [tikiContractAddress, bnb.address, busd.address])
   const priceInUsd = Number(functionResponse.amounts[2].toString()) / Math.pow(10, busd.decimals)
-  console.log('tiki', priceInUsd)
+  // console.log('tiki', priceInUsd)
   return priceInUsd
 }
 
 async function getBnbPrice() {
   const functionResponse = await getAmountsOut(`${1 * Math.pow(10, bnb.decimals)}`, [bnb.address, busd.address])
   const priceInUsd = Number(functionResponse.amounts[1].toString()) / Math.pow(10, busd.decimals)
-  console.log('bnb', priceInUsd)
+  // console.log('bnb', priceInUsd)
   return priceInUsd
+}
+
+async function getTikiVolume() {
+  const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tiki-token&vs_currencies=usd&include_market_cap=false&include_24hr_vol=true&include_24hr_change=false&include_last_updated_at=false')
+  const resolved = await res.json()
+  const volume = resolved['tiki-token'].usd_24h_vol
+  return volume
 }
 
 async function getMetamaskWallet() {
@@ -121,6 +128,7 @@ function App() {
   const [bnbHoldings, setBnbHoldings] = useState(0)
   const [bnbPrice, setBnbPrice] = useState(0)
   const [tikiPrice, setTikiPrice] = useState(0)
+  const [tikiVolume, setTikiVolume] = useState(0)
 
   const [highestBuyers, setHighestBuyers] = useState([])
 
@@ -150,11 +158,11 @@ function App() {
   useEffect(() => {
     getTikiPrice().then(setTikiPrice)
     getBnbPrice().then(setBnbPrice)
-
-
+    getTikiVolume().then(setTikiVolume)
   }, [])
 
   useEffect(() => {
+
     if (ethers.utils.isAddress(address)) {
       if (localStorage.getItem('address') !== address) localStorage.setItem('address', address)
       callContract(address)
@@ -216,7 +224,7 @@ function App() {
       <Router>
         <AccessibleNavigationAnnouncer />
         <Switch>
-          <Route path="/" render={(props) => (<Layout {...props} tikiPrice={tikiPrice} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} totalPaid={totalPaid} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} bnbHoldings={bnbHoldings} bnbPrice={bnbPrice} highestBuyers={highestBuyers} wallet={wallet} getWallet={getWallet} setWallet={setWallet} />)} />
+          <Route path="/" render={(props) => (<Layout {...props} tikiPrice={tikiPrice} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} totalPaid={totalPaid} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} bnbHoldings={bnbHoldings} bnbPrice={bnbPrice} highestBuyers={highestBuyers} wallet={wallet} getWallet={getWallet} setWallet={setWallet} tikiVolume={tikiVolume} />)} />
         </Switch>
       </Router>
     </>

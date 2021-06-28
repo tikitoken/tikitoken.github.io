@@ -14,7 +14,7 @@ import numberWithCommas from '../utils/numberWithCommas'
 
 function Dashboard(props) {
 
-  const { tikiPrice, wallet, setWallet, getWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
+  const { tikiPrice, tikiVolume, wallet, setWallet, getWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
 
   const [reinvestContract, setReinvestContract] = useState(null)
   const [tikiContract, setTikiContract] = useState(null)
@@ -25,13 +25,13 @@ function Dashboard(props) {
   const reinvestInput = <><span>Reinvest </span><input onClick={e => e.stopPropagation()} type="text" className="w-1/3 text-black text-center" value={reinvestAmount} onChange={e => setReinvestAmount(isNaN(e.target.value) ? reinvestAmount : e.target.value)} /><span> BNB (click here to confirm)</span></>
   const payoutText = <><span className="text-yellow-300">{nextPayoutValue != 0 ? nextPayoutValue + ' BNB' : 'Processing'}</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
 
-  const earningsInDollars = (holdings/1000000000)*550000
+  const earningsInDollars = tikiVolume == 0 ? (holdings/1000000000)*220000 : (holdings/1000000000)*(tikiVolume*0.11)
   const earningsInBnb = earningsInDollars/bnbPrice
 
   const compoundedTikiAfterNDays = (starting, days) => {
     let accumulatedTiki = Number(starting)
     for (let i = 0; i < days; i++) {
-      accumulatedTiki = accumulatedTiki + (((accumulatedTiki/1000000000)*550000)/tikiPrice)
+      accumulatedTiki = tikiVolume == 0 ? accumulatedTiki + (((accumulatedTiki/1000000000)*220000)/tikiPrice) : accumulatedTiki + (((accumulatedTiki/1000000000)*(tikiVolume*0.11))/tikiPrice)
     }
     return accumulatedTiki.toFixed(0)
   }
@@ -196,7 +196,7 @@ function Dashboard(props) {
               <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas((earningsInBnb*365).toFixed(2))} BNB</span> (${numberWithCommas((earningsInDollars*365).toFixed(2))})</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Year</span>
             </div>
             <br/>
-            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on $5m trading volume</p>
+            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Dynamic estimations based on 24h of trading volume (${numberWithCommas(tikiVolume.toFixed(0))})</p>
           </CardBody>
         </Card>
         <Card className="col-span-2 lg:col-span-1">
@@ -216,7 +216,7 @@ function Dashboard(props) {
               <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 365)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 180)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 1 Year</span>
             </div>
             <br/>
-            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on current $TIKI price</p>
+            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on current $TIKI price (${tikiPrice.toFixed(4)})</p>
           </CardBody>
         </Card>
       </div>
