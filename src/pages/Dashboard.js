@@ -64,7 +64,7 @@ function Dashboard(props) {
             <div>
               <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Total BNB Paid</p>
               
-              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{`${(paid / 1e18).toFixed(4)}`} BNB</span></p>
+              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{`${(paid / 1e18).toFixed(4)}`}</span><span className="italic font-light text-md text-green-400"> ~${numberWithCommas(((paid / 1e18)*bnbPrice).toFixed(0))}</span></p>
             </div>
           </CardBody>
         </Card>
@@ -87,7 +87,7 @@ function Dashboard(props) {
               className="mr-4"
             />
             <div>
-              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Next Payout Loading</p>
+              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Payout Loading</p>
               
               <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{payoutText}</p>
             </div>
