@@ -14,7 +14,7 @@ import numberWithCommas from '../utils/numberWithCommas'
 
 function Dashboard(props) {
 
-  const { tikiPrice, tikiVolume, wallet, setWallet, getWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
+  const { tikiPrice, tikiVolume, setTikiVolume, wallet, setWallet, getWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
 
   const [reinvestContract, setReinvestContract] = useState(null)
   const [tikiContract, setTikiContract] = useState(null)
@@ -35,6 +35,8 @@ function Dashboard(props) {
     }
     return accumulatedTiki.toFixed(0)
   }
+
+  console.log(tikiVolume)
 
   return (
     <div className="pb-10">
@@ -64,7 +66,7 @@ function Dashboard(props) {
             <div>
               <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Total BNB Paid</p>
               
-              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{`${(paid / 1e18).toFixed(4)}`}</span><span className="italic font-light text-md text-green-400"> ~${numberWithCommas(((paid / 1e18)*bnbPrice).toFixed(0))}</span></p>
+              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{`${(paid / 1e18).toFixed(4)}`}</span><span className="italic font-light text-md text-green-400"> ~${numberWithCommas(((paid / 1e18)*bnbPrice).toFixed(2))}</span></p>
             </div>
           </CardBody>
         </Card>
@@ -179,6 +181,12 @@ function Dashboard(props) {
           </CardBody>
         </Card>
 
+        <Card className="col-span-2">
+          <CardBody className="flex flex-col text-center items-center">
+            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on a default of the last 24h of trading volume<br/>Change the volume to predict earnings based on other volume figures<br/>Trading Volume = $ <input className="text-black" value={numberWithCommas(tikiVolume.toFixed(0))} onChange={e => isNaN(Number(parseFloat(e.target.value.replace(/,/g, '')))) ? tikiVolume : setTikiVolume(Number(parseFloat(e.target.value.replace(/,/g, ''))))} /></p>
+          </CardBody>
+        </Card>
+
         <Card className="col-span-2 lg:col-span-1">
           <CardBody className="flex flex-col text-center items-center">
             <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/money.png')} />
@@ -196,7 +204,7 @@ function Dashboard(props) {
               <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas((earningsInBnb*365).toFixed(2))} BNB</span> (${numberWithCommas((earningsInDollars*365).toFixed(2))})</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Year</span>
             </div>
             <br/>
-            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Dynamic estimations based on 24h of trading volume (${numberWithCommas(tikiVolume.toFixed(0))})</p>
+            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Dynamic estimations based on trading volume of ${numberWithCommas(tikiVolume.toFixed(0))}</p>
           </CardBody>
         </Card>
         <Card className="col-span-2 lg:col-span-1">

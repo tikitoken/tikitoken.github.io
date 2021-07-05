@@ -13,7 +13,7 @@ function Layout(props) {
   let location = useLocation()
   let history = useHistory();
 
-  const { tikiPrice, tikiVolume, wallet, getWallet, setWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, recent, address, nextPayoutProgress, setNextPayoutProgress, nextPayoutValue, setNextPayoutValue, setHoldings, setPaid, setLastPaid, setRecent, setAddress } = props
+  const { tikiPrice, tikiVolume, setTikiVolume, wallet, getWallet, setWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, recent, address, nextPayoutProgress, setNextPayoutProgress, nextPayoutValue, setNextPayoutValue, setHoldings, setPaid, setLastPaid, setRecent, setAddress } = props
 
   useEffect(() => {
     closeSidebar()
@@ -39,7 +39,7 @@ function Layout(props) {
                     key={i}
                     exact={true}
                     path={`${route.path}`}
-                    render={(props) => <route.component {...props} tikiVolume={tikiVolume} getWallet={getWallet} wallet={wallet} setWallet={setWallet} tikiPrice={tikiPrice} highestBuyers={highestBuyers} bnbHoldings={bnbHoldings} bnbPrice={bnbPrice} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} />}
+                    render={(props) => <route.component {...props} tikiVolume={tikiVolume} setTikiVolume={setTikiVolume} getWallet={getWallet} wallet={wallet} setWallet={setWallet} tikiPrice={tikiPrice} highestBuyers={highestBuyers} bnbHoldings={bnbHoldings} bnbPrice={bnbPrice} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} />}
                   />
                 ) : null
               })}
