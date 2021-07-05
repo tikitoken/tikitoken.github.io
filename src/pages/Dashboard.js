@@ -36,8 +36,6 @@ function Dashboard(props) {
     return accumulatedTiki.toFixed(0)
   }
 
-  console.log(tikiVolume)
-
   return (
     <div className="pb-10">
 
